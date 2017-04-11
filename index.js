@@ -13,3 +13,12 @@ app.use(ejsLayouts)
 app.get('/', function(req, res){
   res.render('homepage')
 })
+
+app.use(function (req, res) {
+  res.send('error found')
+})
+
+
+app.listen(port, function () {
+  console.log('app is running at ' + port)
+})
