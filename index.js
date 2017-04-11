@@ -11,7 +11,7 @@ app.use(ejsLayouts)
 
 
 app.get('/', function(req, res){
-  res.send('homepage')
+  res.render('homepage')
 })
 
 app.use(function (req, res) {
