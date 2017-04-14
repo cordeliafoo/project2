@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index",
+    "start": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,12 +18,23 @@
   },
   "homepage": "https://github.com/shirongfoo/project2#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "express-ejs-layouts": "^2.3.0",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.2",
+    "express-validator": "^3.1.3",
     "method-override": "^2.3.8",
+    "mongodb": "^2.2.25",
     "mongoose": "^4.9.4",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
   }
 }
