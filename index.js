@@ -8,6 +8,8 @@ var session = require('express-session')
 var mongoose = require('mongoose')
 var ejsLayouts = require('express-ejs-layouts')
 var methodOverride = require('method-override')
+var passport = require('./config/passportconfig')
+
 
 // initialize app
 var app = express()
@@ -31,15 +33,14 @@ app.use(ejsLayouts)
 
 
 // set up static folders
-// ## using the absolute path for the directory here because path provided
-// ## to the static function is relative to directory from where node process is launched
-app.use('/static', express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // set up body parser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
+
 app.use(cookieParser())
 
 // set up the method override method
@@ -47,15 +48,11 @@ app.use(methodOverride('_method'))
 
 // set up express session
 app.use(session({
-  secret: process.env.SESSION_SECRET
+  secret: process.env.SESSION_SECRET || 'SOUFFLE',
   resave: false,
   saveUnintialized: true
 }))
 
-
-// passport initialization
-app.use(passport.initialize())
-app.use(passport.session())
 
 // set up flash middleware
 app.use(flash())
@@ -66,11 +63,15 @@ app.use(function(req, res, next) {
   res.locals.currentUser = req.user
   next();
 });
+// passport initialization
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 // set up the routes
-var authRouter = require('routes/authRouter')
-var userRouter = require('routes/userRouter')
-var eventRouter = require('routes/eventRouter')
+var authRouter = require('./routes/authRouter')
+var userRouter = require('./routes/userRouter')
+var eventRouter = require('./routes/eventRouter')
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/event', eventRouter)
