@@ -18,6 +18,7 @@ var authController = {
       failureRedirect: '/auth/login',
       successFlash: 'Welcome back ' + req.user,
       failureFlash: 'Sorry you have entered invalid email/passowrd'
+      // failureFlash: true
     })(req, res)
   },
 

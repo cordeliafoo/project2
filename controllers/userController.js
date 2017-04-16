@@ -15,7 +15,7 @@ var userController = {
       password: req.body.password
     }, function (err, createdUser) {
       if (err) {
-        req.flash('error', 'Error creating user')
+        req.flash('error', req.body.email + ' is already linked to an existing account!  Please use another email address')
         res.redirect('/user/signup')
       } else {
         // allow user to be logged in right after signin up
@@ -30,7 +30,8 @@ var userController = {
 
   displayProfilePg: function (req, res) {
     res.render('user/index', {
-      user: req.user
+      user: req.user,
+      flash: req.flash()
     })
   }
 }
