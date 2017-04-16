@@ -12,12 +12,9 @@ router.use(userLoggedIn)
 router.route('/profile')
 .get(userController.displayProfilePg)
 
-// .post(userController.createProfile)
-//
-// router.route('/editprofile')
-// .get(userController.seeEditProfilePg)
-//
-// router.route('/deleteprofile')
-// .get(userController.seeDeleteProfilePg)
+router.route('/editprofile')
+.get(userController.displayEditProfilePg)
+.put(userController.editProfile)
+.delete(userController.deleteAccount)
 
 module.exports = router

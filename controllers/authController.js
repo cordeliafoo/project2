@@ -16,10 +16,10 @@ var authController = {
     passport.authenticate('local', {
       successRedirect: '/user/profile',
       failureRedirect: '/auth/login',
-      successFlash: 'Welcome back ' + req.user,
+      successFlash: 'Welcome back',
       failureFlash: 'Sorry you have entered invalid email/passowrd'
       // failureFlash: true
-    })(req, res)
+    })(req, res) //authenticate returns a middleware function object.  pass in (req, res) to that object to continue with the app's request and response cycle
   },
 
   logout: function (req, res) {

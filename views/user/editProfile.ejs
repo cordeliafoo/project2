@@ -1,0 +1,30 @@
+<form action="/user/editprofile?_method =put" method="POST">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class='form-control' name="name" placeholder="Name" id="name" value="<%- user.name%>" </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class='form-control' name="email" placeholder="Email" id="email" value='<%- user.email%>'>
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="age" class='form-control' name="age" placeholder="Age" id="age" value='<%- user.age%>'>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <input type="string" class='form-control' name="gender" placeholder="Gender" id="gender" value='<%- user.gender%>'>
+        </div>
+        <div class="form-group">
+            <label>Instruments</label>
+            <input type="string" class='form-control' name="instruments" placeholder="Instruments" id="instruments" value='<%- user.instruments%>'>
+        </div>
+        <button type="submit" class='btn btn-default' id='saveEdits'>Save my edits</button>
+</form>
+
+<form class="" action="/user/profile" method="get">
+    <button class='btn btn-default' id='cancel'>Cancel</button>
+</form>
+
+<form  action="/user/deleteprofile?_method = delete" method="post">
+    <button class='btn btn-default' id='cancel'>Delete Profile</button>
+</form>
