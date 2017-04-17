@@ -1,23 +1,18 @@
 <h1>Events</h1>
 <% event %>
 
-<div >
-  <p>Organizer: <%= event.name%></p>
-  <p>Event type : <%= event.type%></p>
-  <p>Description: <%= event.description%></p>
-  <p>Date: <%= event.date%></p>
-  <p>Location: <%= event.location%></p>
-  <p>Spots Available: <%= event.spotsAvailable %></p>
-  <p>Status: <%= event.status%></p>
-</div>
-
-<div class = 'container'>
-<h3>Other Attendees</h3>
-
-<% event.attendees.forEach(function (item) {%>
-  <%= item %>
-<% }) %>
-
+<div>
+ <% event.forEach(function(eachEvent){ %>
+   <p>Organizer: <%= eachEvent.organizerName%></p>
+   <p>EventName: <%= eachEvent.eventName %> </p>
+   <p>EventType : <%= eachEvent.typeOfEvent%></p>
+   <p>Description: <%= eachEvent.description%></p>
+   <p>Date: <%= eachEvent.startDate%></p>
+   <p>Location: <%= eachEvent.location%></p>
+   <p>AvailableSlots: <%= eachEvent.numberOfSpots %></p>
+   <p>Status: <%= eachEvent.status%></p>
+   <p>Attendees: <%= eachEvent.attendees%></p>
+ <% }) %>
 </div>
 
 <form  action="/public/events/event/<%= event.id%>/joinevent?_method=PUT" method="POST">

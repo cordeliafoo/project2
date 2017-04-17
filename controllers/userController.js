@@ -35,7 +35,7 @@ router.post('/login', passport.authenticate('local', {
 
 // full route:  /auth/profile //
 router.get('/profile', function (req, res) {
-  res.render('profile')
+  res.render('profile', {user: req.user})
 })
 
 // full route:  /auth/profile/events //
@@ -58,14 +58,13 @@ router.post('/profile/events/create-event', function (req, res) {
   console.log('creating event', req.body)
   event.create({
     user: req.user.id,
-    eventname: req.body.eventName,
-    organizername: req.body.organizerName,
+    eventName: req.body.eventName,
+    organizerName: req.user.name,
     description: req.body.description,
-    date: req.body.date,
+    startDate: req.body.startDate,
     location: req.body.location,
-    groupsize: req.body.groupSize,
     type: req.body.type,
-    numberofspots: req.body.numberOfSpots,
+    numberOfSpots: req.body.numberOfSpots,
     status: req.body.status,
     attendees: []
   }, function (err, event) {
@@ -76,26 +75,15 @@ router.post('/profile/events/create-event', function (req, res) {
     User.findById(req.user.id, function (err, user, done) {
       // console.log('user', user)
       // console.log(event._id)
+      if (err)console.log(err)
       user.update({
         $push: { eventsOrganized: event._id }},
          function (err, user2) {
            console.log('saved event user', user2)
            if (err) return console.log(err)
-           res.redirect('/')
+           res.redirect('/auth/profile/events')
          })
     })
-
-  //   User.findByIdAndUpdate(
-  //     req.user.id,
-  //   { $push: { eventsOrganized: event._id}},
-  //   function (err, data) {
-  //     if (err) console.log(err)
-  //     console.log(data)
-  //   })
-  //   console.log('user update')
-  //   console.log('redirect')
-  //   res.redirect('/auth/profile/events')
-   // })
   })
 })
 // })
@@ -105,6 +93,7 @@ router.get('/profile/events/:id', function (req, res) {
     res.render('userindividualeventpage', {event: event})
   })
 })
+
 router.delete('/profile/events/:id', function (req, res) {
   event.findOneAndRemove({_id: req.params.id}, function (err, event) {
     console.log('delete')
@@ -114,9 +103,8 @@ router.delete('/profile/events/:id', function (req, res) {
     } else {
       User.findByIdAndUpdate(
         req.user.id,
-        {'$pull': { posts: post._id }},
+        {$pull: { eventsOrganized: event._id }},
         function (err, event2) {
-          // (err) ? req.flashreq.flash('error', 'Delete unsuccesful') : req.flash('success', 'Post deleted')
           if (err) {
             console.log(err)
             return

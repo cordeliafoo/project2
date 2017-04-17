@@ -3,11 +3,11 @@
     <table class='table'>
     <thead>
       <tr>
-        <th>Id</th>
+        <th>Event Date</th>
+        <th>Event Name</th>
         <th>Description</th>
-        <th>Date</th>
         <th>Location</th>
-        <th>Ideal group size</th>
+        <th>Number of Spots</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -15,20 +15,20 @@
     <tbody>
       <% event %>
       <tr>
-      <td><%= event.id %></td>
+      <td><%= event.startDate %></td>
+      <td><%= event.eventName %></td>
       <td><%= event.description %></td>
-      <td><%= event.date %></td>
       <td><%= event.location %></td>
-      <td><%= event.groupsize %></td>
+      <td><%= event.numberOfSpots %></td>
       <td><%= event.status %></td>
       <tr>
     </tbody>
     </table>
 
-
 <a href ="/auth/profile/events/<%= event.id%>/edit"<button type="button" class="btn btn-default">Edit event</button></a>
+
 <form method="POST" action="/auth/profile/events/<%= event.id%>?_method=DELETE">
-<input type="submit" value="Delete">
+<button type="submit" value="Delete" class = 'btn btn-default'>Delete</button>
 </form>
 
 </div>

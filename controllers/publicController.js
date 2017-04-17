@@ -5,15 +5,15 @@ var router = express.Router({
   mergeParams: true
 })
 
-var event = require('../models/eventModel')
+var eventVar = require('../models/eventModel')
 
 // full route: /public/events
 router.get('/events', function (req, res) {
-  console.log(event)
-  event.find({}, function (err, event) {
+  eventVar.find({}, function (err, event) {
     if (err) {
       return
     } else {
+      console.log(event)
       res.render('publicEventsList', {event: event})
     }
   })
@@ -21,30 +21,32 @@ router.get('/events', function (req, res) {
 
 // full route: /public/events/events/:id
 router.get('/events/event/:id', function (req, res) {
-  event.findById(req.params.id, function (err, event) {
+  eventVar.findById(req.params.id, function (err, event) {
     if (err) {
       console.log(err)
       return
     } else {
-      res.render('publicEventsList', {event: event})
+      console.log('this is event id ', event.id)
+      res.render('publicEventList', {event: event})
     }
   })
 })
 
 // if viewer wants to join event, check if user is signed in.
 // if viewer is signed in, allow to join
-// if viewer is not signed in, redirect them to log in or sign up page
+// if viewer is not signed in,
+// redirect them to log in or sign up page
 
 router.get('/events/event/:id/joinevent', function (req, res) {
-  event.findById(req.params.id, function (err, event) {
-    res.render('publiceventlisting', {event: event})
+  eventVar.findById(req.params.id, function (err, event) {
+    res.render('publiceventList', {event: event})
   })
 })
 
 router.get('/events/event/:id/yourevent', function (req, res) {
   console.log('individual event page')
   // chain .find method with exec so Mongoose will execute the query
-  event.find({user: req.user.id}).exec(function (err, user) {
+  eventVar.find({user: req.user.id}).exec(function (err, user) {
     res.redirect('/auth/profile/events')
   })
 })
@@ -53,7 +55,7 @@ router.get('/events/event/:id/yourevent', function (req, res) {
 // update viewer's eventsAttending array to include said event.
 
 router.put('/events/event/:id/joinevent', function (req, res) {
-  event.findOne({_id: req.params.id}, function (err, event) {
+  eventVar.findOne({_id: req.params.id}, function (err, event) {
     if (err) {
       console.log(err)
       return

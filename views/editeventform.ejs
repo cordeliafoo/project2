@@ -2,10 +2,12 @@
     <% event %>
 
 <form method="POST" action="/auth/profile/events/<%=event.id%>/edit?_method=PUT">
-  Description: <input type="text" name="description" value="<%= event.description %>">
-  Date: <input type="text" name="date" value="<%= event.date%>">
-  Location: <input type="text" name="location" value="<%= event.location %>">
-  Group size: <input type="text" name="groupsize" value="<%= event.groupsize %>">
+  Event Date: <input type="Date" name="description" value="<%= event.startDate %>"><br>
+  Event Name: <input type="text" name="eventName" value="<%= event.eventName%>"><br>
+  Description: <input type="text" name="description" value="<%= event.date%>"><br>
+  Type of event: <input type= "text" name="typeOfEvent" value = "<%=event.typeOfEvent"> <br>
+  Location: <input type="text" name="location" value="<%= event.location %>"><br>
+  Number of spots: <input type= "number" name="numberOfSpots" value = "event.numberOfSpots"> <br>
   Status: <input type="text" name="status" value="<%= event.status %>">
   <input type="submit" value="Submit">
 </form>

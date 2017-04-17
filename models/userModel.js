@@ -4,51 +4,14 @@ var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@
 var eventModel = require('./eventModel')
 
 var userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    require: true,
-    minlength: [3, 'name must be between 3 and 50 characters'],
-    maxlength: [50, 'name must be between 3 and 50 characters']
-  },
-  email: {
-    type: String,
-    require: true,
-    unique: true,
-    lowercase: true,
-    match: emailRegex
-  },
-  password: {
-    type: String,
-    require: true,
-    minlength: [8, 'name must be between 8 and 40 characters']
-  },
-
-  images: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Image'
-  }],
-
-  instruments: {
-    type: String
-  },
-
-  memberSince: {
-    type: Date,
-    default: Date.now()
-  },
-
-  // eventsOrganized: {type: Array},
-
-  eventsOrganized: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event'
-  }],
-
-  eventsAttending: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event'
-  }]
-
+  name: {type: String, require: true, minlength: [3, 'name must be between 3 and 50 characters'], maxlength: [50, 'name must be between 3 and 50 characters']},
+  email: {type: String, require: true, unique: true, lowercase: true, match: emailRegex},
+  password: {type: String, require: true, minlength: [8, 'name must be between 8 and 40 characters']},
+  images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
+  instruments: {type: String},
+  memberSince: {type: Date, default: Date.now()},
+  eventsOrganized: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}],
+  eventsAttending: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}]
 })
 
 userSchema.pre('save', function (next) {
@@ -65,14 +28,13 @@ userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-//exclude password from  JSON data when returning to the client
+// exclude password from  JSON data when returning to the client
 userSchema.options.toJSON = {
-    transform: function(doc, ret, options) {
-        delete ret.password;
-        return ret;
-    }
+  transform: function (doc, ret, options) {
+    delete ret.password
+    return ret
+  }
 }
-
 
 var User = mongoose.model('User', userSchema)
 

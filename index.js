@@ -89,6 +89,9 @@ app.use('/public', publicController)
 app.use('/auth', userController)
 app.use(isLoggedIn)
 
+// app.get('/account', auth.restrict, routes.account)
+
+
       // set the port
 var port = process.env.PORT || 5000
 app.listen(port, function () {

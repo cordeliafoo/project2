@@ -1,35 +1,39 @@
 <div class='container'>
   <h1>Your events</h1>
-  <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default">Propose new event</button></a>
+  <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default">Organize new event</button></a>
   <table class='table'>
     <thead>
       <tr>
+        <th>Event Date</th>
         <th>Event Name</th>
-        <th>Date</th>
         <th>Description</th>
         <th>Location</th>
+        <th>Number of Spots</th>
         <th>Status</th>
+        <th>Edit Event</th>
       </tr>
     </thead>
     <tbody>
       <%user%>
       <tr>
         <% user.eventsAttending.forEach(function (item) {%>
-          <td><a href ="/auth/profile/events/<%=item.id%>"><%= item.id%></a></td>
-          <td><%= item.name%></td>
-          <td><%= item.Date%></td>
+          <td><%= user.startDate.toDateString()%></td>
+          <td><a href ="/auth/profile/events/<%=item.id%>"><%= item.eventName %></a></td>
           <td><%= item.description%></td>
           <td><%= item.location%></td>
+          <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>
           <% }) %>
       </tr>
       <tr>
         <% user.eventsOrganized.forEach(function (item) {%>
-          <td><a href= "/public/events/event/<%= item.id%>"><%= item.id%></a></td>
+          <td><%= item.startDate%></td>
+          <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
           <td><%= item.description%></td>
-          <td><%= item.date%></td>
           <td><%= item.location%></td>
+          <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>
+          <td> <a href ="/auth/profile/events/<%= item.id%>"<button type="button" class="btn btn-default">Edit Event</button></a></td>
           <% }) %>
       </tr>
     </tbody>

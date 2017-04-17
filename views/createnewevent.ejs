@@ -1,13 +1,11 @@
 <h1>Create new event</h1>
 <% user %>
 <form action="/auth/profile/events/create-event" method="POST">
-Date: <input type= "date" name="date"> <br>
-Event Name: <input type="text" name="eventName" value=""><br>
-Organizer Name: <input type= "text" name = "" <br>
-Description: <input type="text" name="description" value=""><br>
+Event Date: <input type= "date" name="startDate" id="dateInput"> <br>
+Event Name: <input type="text" name="eventName"><br>
+Description: <input type="text" name="description"><br>
 Location: <input type= "text" name="location"> <br>
-Group Size: <input type="number" name="groupSize" value=""><br>
-Type of event: <input type= "text" name="type"> <br>
+Type of event: <input type= "text" name="typeOfEvent"> <br>
 Number of spots: <input type= "number" name="numberOfSpots"> <br>
 Status: <input type= "text" name="status" placeholder = "proposed/confirmed"> <br>
 <input type="submit" name="Submit">
