@@ -1,3 +1,7 @@
+// require dependencies
+require('dotenv').config({
+  silent: true
+})
 var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
@@ -9,8 +13,14 @@ var mongoose = require('mongoose')
 var ejsLayouts = require('express-ejs-layouts')
 var methodOverride = require('method-override')
 var passport = require('./config/passportconfig')
-
-require('dotenv').config({silent: true})
+var isLoggedIn = require('./middleware/isLoggedIn')
+var multer = require('multer')
+var upload = multer({
+  dest: './uploads'
+})
+var cloudinary = require('cloudinary')
+var fs = require('fs')
+var image = require('./models/imageModel')
 
 // initialize app
 var app = express()
@@ -38,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // set up body parser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }))
 
 app.use(cookieParser())
@@ -52,33 +62,34 @@ app.use(session({
   resave: false,
   saveUnintialized: true
 }))
+// passport initialization
+app.use(passport.initialize())
+app.use(passport.session())
 
 // set up flash middleware
 app.use(flash())
 app.use(function (req, res, next) {
   // this middleware will call on every request and set the req.flash() value.
-  // res.locals.message is used here to get the req.flash() values on the current age without having to refresh page
+  // res.locals.message is used here to get the req.flash() values on the current page without having to refresh page
   res.locals.message = req.flash()
-   // passport fills the req.user object with the current user
+  // passport fills the req.user object with the current user
   res.locals.currentUser = req.user
   next()
 })
-// passport initialization
-app.use(passport.initialize())
-app.use(passport.session())
 
 // set up the routes
-var authRouter = require('./routes/authRouter')
-var userRouter = require('./routes/userRouter')
-var eventRouter = require('./routes/eventRouter')
-app.get('/', function(req, res){
-  res.redirect('/auth/login')
-})
-app.use('/auth', authRouter)
-app.use('/user', userRouter)
-app.use('/event', eventRouter)
 
-// set the port
+app.get('/', function (req, res) {
+  res.render('landing')
+})
+var publicController = require('./controllers/publicController')
+var userController = require('./controllers/userController')
+
+app.use('/public', publicController)
+app.use('/auth', userController)
+app.use(isLoggedIn)
+
+      // set the port
 var port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log('app is running at ' + port)

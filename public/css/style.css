@@ -2,6 +2,8 @@
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -76,12 +78,4 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
-}
-
-#loginBtn {
-  margin-bottom: 10px;
-}
-
-#signupBtn{
-  margin-bottom:10px;
 }

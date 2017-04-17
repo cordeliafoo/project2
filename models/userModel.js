@@ -1,11 +1,14 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcrypt')
-var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+var eventModel = require('./eventModel')
 
 var userSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true
+    require: true,
+    minlength: [3, 'name must be between 3 and 50 characters'],
+    maxlength: [50, 'name must be between 3 and 50 characters']
   },
   email: {
     type: String,
@@ -16,16 +19,14 @@ var userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    require: true
+    require: true,
+    minlength: [8, 'name must be between 8 and 40 characters']
   },
 
-  age: {
-    type: Number
-  },
-
-  gender: {
-    type: String
-  },
+  images: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image'
+  }],
 
   instruments: {
     type: String
@@ -34,7 +35,19 @@ var userSchema = new mongoose.Schema({
   memberSince: {
     type: Date,
     default: Date.now()
-  }
+  },
+
+  // eventsOrganized: {type: Array},
+
+  eventsOrganized: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event'
+  }],
+
+  eventsAttending: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event'
+  }]
 
 })
 
@@ -51,6 +64,15 @@ userSchema.pre('save', function (next) {
 userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)
 }
+
+//exclude password from  JSON data when returning to the client
+userSchema.options.toJSON = {
+    transform: function(doc, ret, options) {
+        delete ret.password;
+        return ret;
+    }
+}
+
 
 var User = mongoose.model('User', userSchema)
 

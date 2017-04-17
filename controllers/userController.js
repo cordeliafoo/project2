@@ -1,80 +1,153 @@
-var passport = require('../config/passportconfig')
 var User = require('../models/userModel')
-var mongoose = require('mongoose')
+var image = require('../models/imageModel')
+var event = require('../models/eventModel')
+var passport = require('../config/passportConfig')
+var express = require('express')
+var router = express.Router({mergeParams: true})
+var multer = require('multer')
+var cloudinary = require('cloudinary')
+var upload = multer({dest: './uploads/'})
 
-var userController = {
-  displaySignupPg: function (req, res) {
-    res.render('user/signup', {
-      user: req.user
+// full route:  /auth/signup //
+router.get('/signup', function (req, res) {
+  res.render('signupForm')
+})
+router.post('/signup', function (req, res) {
+  User.create(req.body, function (err, createduser) {
+    if (err) {
+      console.log(err)
+      res.redirect('/auth/signup')
+      return
+    } else {
+      res.redirect('/auth/login')
+    }
+  })
+})
+
+// full route:  /auth/login //
+router.get('/login', function (req, res) {
+  res.render('loginForm')
+})
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/auth/profile/',
+  failureRedirect: '/auth/login'
+}))
+
+// full route:  /auth/profile //
+router.get('/profile', function (req, res) {
+  res.render('profile')
+})
+
+// full route:  /auth/profile/events //
+router.get('/profile/events', function (req, res) {
+  User.findById(req.user.id)
+  .populate('eventsOrganized')
+  .populate('eventsAttending')
+  .exec(function (err, user) {
+    if (err) console.log(err)
+    res.render('usereventsdashboard', {user: user})
+  })
+})
+
+// full route:  /auth/profile/events/create-event  //
+router.get('/profile/events/create-event', function (req, res) {
+  console.log(req.user)
+  res.render('createnewevent', {user: req.user})
+})
+router.post('/profile/events/create-event', function (req, res) {
+  console.log('creating event', req.body)
+  event.create({
+    user: req.user.id,
+    eventname: req.body.eventName,
+    organizername: req.body.organizerName,
+    description: req.body.description,
+    date: req.body.date,
+    location: req.body.location,
+    groupsize: req.body.groupSize,
+    type: req.body.type,
+    numberofspots: req.body.numberOfSpots,
+    status: req.body.status,
+    attendees: []
+  }, function (err, event) {
+    if (err) {
+      console.log(err)
+      return
+    }
+    User.findById(req.user.id, function (err, user, done) {
+      // console.log('user', user)
+      // console.log(event._id)
+      user.update({
+        $push: { eventsOrganized: event._id }},
+         function (err, user2) {
+           console.log('saved event user', user2)
+           if (err) return console.log(err)
+           res.redirect('/')
+         })
     })
-  },
 
-  signup: function (req, res) {
-    User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    }, function (err, createdUser) {
-      if (err) {
-        req.flash('error', req.body.email + ' Signup was unsuccessful.  Please try again.')
-        res.redirect('/user/signup')
-      } else {
-        // allow user to be logged in right after signin up
-        // calling authenticate within the route handler rather than passport being used as a route middleware
-        passport.authenticate('local', {
-          successRedirect: '/user/profile',
-          successFlash: "Welcome to Let's Jam!"
-        })(req, res)  // passport.authenticate returns a function that takes arguements(req, res).   evoke this function with (req, res) to continue the app's request-response cycle
-      }
-    })
-  },
+  //   User.findByIdAndUpdate(
+  //     req.user.id,
+  //   { $push: { eventsOrganized: event._id}},
+  //   function (err, data) {
+  //     if (err) console.log(err)
+  //     console.log(data)
+  //   })
+  //   console.log('user update')
+  //   console.log('redirect')
+  //   res.redirect('/auth/profile/events')
+   // })
+  })
+})
+// })
+// full route:  /auth/profile/events/:id  //
+router.get('/profile/events/:id', function (req, res) {
+  event.findById(req.params.id, function (err, event) {
+    res.render('userindividualeventpage', {event: event})
+  })
+})
+router.delete('/profile/events/:id', function (req, res) {
+  event.findOneAndRemove({_id: req.params.id}, function (err, event) {
+    console.log('delete')
+    if (err) {
+      console.log(err)
+      returns
+    } else {
+      User.findByIdAndUpdate(
+        req.user.id,
+        {'$pull': { posts: post._id }},
+        function (err, event2) {
+          // (err) ? req.flashreq.flash('error', 'Delete unsuccesful') : req.flash('success', 'Post deleted')
+          if (err) {
+            console.log(err)
+            return
+          }
+          res.redirect('/auth/profile/events')
+        })
+    }
+  })
+})
 
-  displayProfilePg: function (req, res) {
-    res.render('user/index', {
-      user: req.user,
-      flash: req.flash()
-    })
-  },
+// full route:  /auth/profile/events/:id/edit //
+router.get('/profile/events/:id/edit', function (req, res) {
+  event.findById(req.params.id, function (err, event) {
+    res.render('editeventform', {event: event})
+  })
+})
+router.put('/profile/events/:id/edit', function (req, res) {
+  event.findOneAndUpdate({_id: req.params.id}, req.body, function (err, event) {
+    if (err) {
+      console.log(err)
+      return
+    } else {
+      res.redirect('/auth/profile/events/' + req.params.id)
+    }
+  })
+})
 
-  displayEditProfilePg: function (req, res) {
-    // his userController.edit
-    res.render('user/editProfile', {
-      user: req.user
-    })
-  },
+router.get('/logout', function (req, res) {
+  req.logout()
+  console.log('logged out')
+  res.redirect('/')
+})
 
-  editProfile: function (req, res) {
-    // his userController.update
-    console.log(req.user.name)
-    User.findOneAndUpdate({
-      _id: req.user.id
-    }, {
-      name: req.body.name,
-      email: req.body.email,
-      age: req.body.age,
-      gender: req.body.gender,
-      instruments: req.body.instruments
-    }, function (err, userEdit) {
-      if(err) {
-        res.redirect('/user/editprofile')
-      } else {
-        req.flash('success', 'Profile has been successfully updated')
-        res.redirect('/user/profile')
-      }
-    })
-  },
-  deleteAccount: function (req, res) {
-    User.findByIdAndRemove(req.user.id, function (err, removedUser) {
-      if (err) {
-        req.flash('error', 'Sorry, unable to delete ' + req.user.name + "'s account'")
-        res.redirect('/user/profile')
-      } else {
-        req.flash('success', req.user.name + "'s account has been deleted'")
-        res.redirect('/auth/login')
-      }
-    })
-  }
-
-}
-
-module.exports = userController
+module.exports = router

@@ -3,60 +3,29 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LETSJAM</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/style.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
 
-    <body>
-        <div class="container">
-            <div class="header clearfix">
-                <nav>
-                    <ul class="nav nav-pills pull-right">
-                        <li role="presentation" class="active"><a href="/user/profile">Profile</a></li>
-                        <li role="presentation"><a href="/user/editprofile">Edit Profile</a></li>
-                        <li role="presentation"><a href="#">Events</a></li>
-                    </ul>
-                </nav>
-                <h3 class="text-muted">LETSJAM</h3>
-            </div>
-            <%- include ./widgets/message %>
-                <div class="jumbotron">
-                    <%- body %>
-                </div>
-                <div class="row marketing">
-                    <div class="col-lg-6">
-                        <h4>Subheading</h4>
-                        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+<body>
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="/">Home</a></li>
+        <li role="presentation"><a href="/auth/signup">Signup</a></li>
+        <li role="presentation"><a href="/auth/login">Login</a></li>
+        <li role="presentation"><a href="/auth/profile">Profile</a></li>
+        <li role="presentation"><a href="/auth/profile/events">Your Events</a></li>
+        <li role="presentation"><a href="/auth/logout">Logout</a></li>
+        <li role="presentation"><a href="/public/events">View All Events</a></li>
 
-                        <h4>Subheading</h4>
-                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+    </ul>
 
-                        <h4>Subheading</h4>
-                        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <h4>Subheading</h4>
-                        <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-                        <h4>Subheading</h4>
-                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                        <h4>Subheading</h4>
-                        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    </div>
-                </div>
-                <footer class="footer">
-                    <p>&copy; 2016 Company, Inc.</p>
-                </footer>
-        </div>
-        <!-- /container -->
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    </body>
+    <%# <h3>The earth without art is just <i>Eh</i></h3>%>
+        <h4>A man should hear a little music, read a little poetry, and see a fine picture every day of his life  - Goethe</h4>
+        <%- body %>
+</body>
 
 </html>
