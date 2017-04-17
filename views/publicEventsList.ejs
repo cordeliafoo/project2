@@ -4,17 +4,16 @@
 <div>
  <% event.forEach(function(eachEvent){ %>
    <p>Organizer: <%= eachEvent.organizerName%></p>
-   <p>EventName: <%= eachEvent.eventName %> </p>
-   <p>EventType : <%= eachEvent.typeOfEvent%></p>
+   <p>Event Name: <%= eachEvent.eventName %> </p>
+   <p>Event Date: <%= eachEvent.startDate%></p>
+   <p>Event Type : <%= eachEvent.typeOfEvent%></p>
    <p>Description: <%= eachEvent.description%></p>
-   <p>Date: <%= eachEvent.startDate%></p>
    <p>Location: <%= eachEvent.location%></p>
    <p>AvailableSlots: <%= eachEvent.numberOfSpots %></p>
    <p>Status: <%= eachEvent.status%></p>
    <p>Attendees: <%= eachEvent.attendees%></p>
+   <form  action="/public/events/event/<%= event.id%>/joinevent?_method=PUT" method="POST">
+   <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
+   </form>
  <% }) %>
 </div>
-
-<form  action="/public/events/event/<%= event.id%>/joinevent?_method=PUT" method="POST">
-<input type="submit" value="Join">
-</form>

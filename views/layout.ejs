@@ -12,19 +12,23 @@
 </head>
 
 <body>
+<% req %>
     <ul class="nav nav-pills">
         <li role="presentation"><a href="/">Home</a></li>
-        <li role="presentation"><a href="/auth/signup">Signup</a></li>
-        <li role="presentation"><a href="/auth/login">Login</a></li>
+
+        <% if(req){ %>
+          <li role="presentation"><a href="/auth/logout">Logout</a></li>
+        <% } else { %>
+          <li role="presentation"><a href="/auth/login">Login</a></li>
+          <li role="presentation"><a href="/auth/signup">Signup</a></li>
+        <%} %>
         <li role="presentation"><a href="/auth/profile">Profile</a></li>
         <li role="presentation"><a href="/auth/profile/events">Your Events</a></li>
-        <li role="presentation"><a href="/auth/logout">Logout</a></li>
         <li role="presentation"><a href="/public/events">View All Events</a></li>
 
     </ul>
-
-    <%# <h3>The earth without art is just <i>Eh</i></h3>%>
         <h4>A man should hear a little music, read a little poetry, and see a fine picture every day of his life  - Goethe</h4>
+        <%- include ./widgets/alerts %>
         <%- body %>
 </body>
 

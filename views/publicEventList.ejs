@@ -2,19 +2,18 @@
 <% event %>
 
 <div >
-  <p>Organizer: <%= eachEvent.organizerName%></p>
-  <p>EventName: <%= eachEvent.eventName %> </p>
-  <p>EventType : <%= eachEvent.typeOfEvent%></p>
-  <p>Description: <%= eachEvent.description%></p>
-  <p>Date: <%= eachEvent.startDate%></p>
-  <p>Location: <%= eachEvent.location%></p>
-  <p>AvailableSlots: <%= eachEvent.numberOfSpots %></p>
-  <p>Status: <%= eachEvent.status%></p>
-  <p>Attendees: <%= eachEvent.attendees%></p>
+  <p>Organizer: <%= event.organizerName%></p>
+  <p>EventName: <%= event.eventName %> </p>
+  <p>EventType : <%= event.typeOfEvent%></p>
+  <p>Description: <%= event.description%></p>
+  <p>Date: <%= event.startDate%></p>
+  <p>Location: <%= event.location%></p>
+  <p>AvailableSlots: <%= event.numberOfSpots %></p>
+  <p>Status: <%= event.status%></p>
 </div>
 
 <div class = 'container'>
-<h3>People also attending this event</h3>
+<h2>Other Attendees</h2>
 
 <% event.attendees.forEach(function (item, index) {%>
   <%= item %>

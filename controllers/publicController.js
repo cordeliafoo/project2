@@ -14,7 +14,7 @@ router.get('/events', function (req, res) {
       return
     } else {
       console.log(event)
-      res.render('publicEventsList', {event: event})
+      res.render('publicEventsList', {event: event, req: req.user})
     }
   })
 })

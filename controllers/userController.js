@@ -26,7 +26,7 @@ router.post('/signup', function (req, res) {
 
 // full route:  /auth/login //
 router.get('/login', function (req, res) {
-  res.render('loginForm')
+  res.render('loginForm', {req: req.user})
 })
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/auth/profile/',
@@ -35,18 +35,30 @@ router.post('/login', passport.authenticate('local', {
 
 // full route:  /auth/profile //
 router.get('/profile', function (req, res) {
-  res.render('profile', {user: req.user})
+  if(req.user){
+    res.render('profile', {user: req.user, req: req.user})
+  } else {
+    req.flash('error', 'You need to log in to view your profile')
+    res.redirect('/auth/login')
+  }
 })
 
 // full route:  /auth/profile/events //
 router.get('/profile/events', function (req, res) {
-  User.findById(req.user.id)
-  .populate('eventsOrganized')
-  .populate('eventsAttending')
-  .exec(function (err, user) {
-    if (err) console.log(err)
-    res.render('usereventsdashboard', {user: user})
-  })
+  if(req.user){
+    User.findById(req.user.id)
+    .populate('eventsOrganized')
+    .populate('eventsAttending')
+    .exec(function (err, user) {
+      if (err) console.log(err)
+      res.render('usereventsdashboard', {
+        user: user,
+        req: req.user})
+    })
+  } else {
+    req.flash('error', 'You need to log in to view your events')
+    res.redirect('/auth/login')
+  }
 })
 
 // full route:  /auth/profile/events/create-event  //
