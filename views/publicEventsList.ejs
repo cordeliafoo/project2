@@ -9,9 +9,9 @@
    <p>Event Type : <%= eachEvent.typeOfEvent%></p>
    <p>Description: <%= eachEvent.description%></p>
    <p>Location: <%= eachEvent.location%></p>
-   <p>AvailableSlots: <%= eachEvent.numberOfSpots %></p>
+   <p>Number of Spots: <%= eachEvent.numberOfSpots %></p>
+   <p>Number of Attendees: <%= eachEvent.attendees.length %></p>
    <p>Status: <%= eachEvent.status%></p>
-   <p>Attendees: <%= eachEvent.attendees%></p>
    <form  action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
    <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
    </form>

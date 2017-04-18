@@ -6,6 +6,7 @@ var router = express.Router({
 })
 
 var eventVar = require('../models/eventModel')
+var User = require('../models/userModel')
 
 // full route: /public/events
 router.get('/events', function (req, res) {
@@ -13,7 +14,6 @@ router.get('/events', function (req, res) {
     if (err) {
       return
     } else {
-      console.log(event)
       res.render('publicEventsList', {event: event, req: req.user})
     }
   })
@@ -26,8 +26,8 @@ router.get('/events/event/:id', function (req, res) {
       console.log(err)
       return
     } else {
-      console.log('this is event id ', event.id)
-      res.render('publicEventList', {event: event})
+      console.log(event);
+      res.render('publicEventList', {event: event, req: req.user})
     }
   })
 })
@@ -40,10 +40,11 @@ router.get('/events/event/:id', function (req, res) {
 // full route: /public/events/event/:id/joinevent
 router.get('/events/event/:id/joinevent', function (req, res) {
   eventVar.findById(req.params.id, function (err, event) {
-    if(!req.user){
-      res.render('publiceventList', {event: event, req: req.user})
+    if (!req.user) {
+      res.render('publicEventList', {event: event, req: req.user})
     } else {
-      res.redirect()
+      req.flash('error', 'You need to login to join the event')
+      res.redirect('auth/login')
     }
   })
 })
@@ -53,12 +54,32 @@ router.put('/events/event/:id/joinevent', function (req, res) {
       console.log(err)
       return
     } else {
-      console.log(req);
-      event.attendees.push(req.user._id)
-      req.user.eventsAttending.push(req.params.id)
-      event.save()
-      req.user.save()
-      res.redirect('/public/events/event/' + req.params.id)
+      if (req.user) {
+        console.log('the user object is' + req.user);
+        event.update({
+          $push: {attendees: req.user}},
+        function (err, data) {
+          if (err) console.log(err)
+        })
+        event.save()
+        // console.log(event);
+        User.findById(req.user._id, function (err, user) {
+          if (err) {
+            console.log(err)
+          } else {
+            user.update({
+              $push: {eventsAttending: event}}, function (err, data) {
+                if (err)console.log(err)
+            })
+            user.save()
+          }
+        })
+        req.flash('success', 'Your attendance has been saved')
+        res.redirect('/public/events/event/' + req.params.id)
+      } else {
+        req.flash('error', 'You need to be logged in to join event')
+        res.redirect('auth/login')
+      }
     }
   })
 })
@@ -73,6 +94,5 @@ router.get('/events/event/:id/yourevent', function (req, res) {
 
 // if viewer signs up for event, update attenees array from the eventModel
 // update viewer's eventsAttending array to include said event.
-
 
 module.exports = router

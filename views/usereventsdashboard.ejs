@@ -1,6 +1,48 @@
 <div class='container'>
   <h1>Your events</h1>
-  <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default">Organize new event</button></a>
+
+  <form class="form-horizontal">
+    <div class="form-group">
+      <h3 class='col-ml-3 control-label pull-left'>Events you organized</h3>
+      <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default pull-right col-ml-1">Organize new event</button></a>
+    </div>
+  </form>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Event Date</th>
+        <th>Event Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Number of Spots</th>
+        <th>Attendees</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%user%>
+      <tr>
+        <% user.eventsOrganized.forEach(function (item) {%>
+          <td><%= item.startDate%></td>
+          <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
+          <td><%= item.description%></td>
+          <td><%= item.location%></td>
+          <td><%= item.numberOfSpots%></td>
+          <td>list of attendees</td>
+          <td><%= item.status%></td>
+          <td> <a href ="/auth/profile/events/<%= item.id%>"<button type="button" class="btn btn-default">Edit Event</button></a></td>
+          <% }) %>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <form class="form-horizontal">
+    <div class="form-group">
+      <h3 class='col-ml-3 control-label pull-left'>Events you're attending</h3>
+    </div>
+  </form>
   <table class='table'>
     <thead>
       <tr>
@@ -10,31 +52,20 @@
         <th>Location</th>
         <th>Number of Spots</th>
         <th>Status</th>
-        <th>Edit Event</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <%user%>
       <tr>
         <% user.eventsAttending.forEach(function (item) {%>
-          <td><%= user.startDate.toDateString()%></td>
-          <td><a href ="/auth/profile/events/<%=item.id%>"><%= item.eventName %></a></td>
-          <td><%= item.description%></td>
-          <td><%= item.location%></td>
-          <td><%= item.numberOfSpots%></td>
-          <td><%= item.status%></td>
-          <% }) %>
-      </tr>
-      <tr>
-        <% user.eventsOrganized.forEach(function (item) {%>
           <td><%= item.startDate%></td>
-          <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
+          <td><%= item.eventName%></td>
           <td><%= item.description%></td>
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>
-          <td> <a href ="/auth/profile/events/<%= item.id%>"<button type="button" class="btn btn-default">Edit Event</button></a></td>
+          <td> <a href ="/auth/profile/events/<%= item.id%>"<button type="button" class="btn btn-default">Withdraw From Event</button></a></td>
           <% }) %>
-      </tr>
+       </tr>
     </tbody>
   </table>
