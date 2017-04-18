@@ -10,8 +10,8 @@ var userSchema = new mongoose.Schema({
   images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
   instruments: {type: String},
   memberSince: {type: Date, default: Date.now()},
-  eventsOrganized: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}],
-  eventsAttending: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}]
+  eventsOrganized: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
+  eventsAttending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}]
 })
 
 userSchema.pre('save', function (next) {

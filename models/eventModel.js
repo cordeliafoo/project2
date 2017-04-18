@@ -11,7 +11,7 @@ var eventSchema = new mongoose.Schema({
   numberOfSpots: {type: Number},
   status: {type: String, default: 'Proposed'},
   createdAt: {type: Date, default: Date.now()},
-  attendees: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+  attendees: [{type: mongoose.Schema.ObjectId, ref: 'User'}]
 })
 
 var Event = mongoose.model('Event', eventSchema)

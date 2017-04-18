@@ -165,14 +165,16 @@ router.get('/profile/events/:id/withdraw', function (req, res) {
     if (err) {
       console.log(err)
     } else {
-      console.log('attendees for codingfest is ' + data.attendees);
-      console.log('tias userid is ' + req.user.id);
-      data.attendees.splice(data.attendees.indexOf(req.user.id), 1)
-      console.log('tia is attending' + req.user.eventsAttending[0]);
-      console.log('the event id is ' + req.params.id);
-      console.log('this is the index number ' + req.user.eventsAttending.indexOf(req.params.id));
-      req.user.eventsAttending.splice(req.user.eventsAttending.indexOf(req.params.id), 1)
-      console.log('this should be empty string ' +  req.user.eventsAttending[0]);
+      // console.log(data.attendees);
+      var index = data.attendees.indexOf(req.user.id)
+      // console.log(index)
+      data.attendees.splice(index, 1)
+      // console.log(data.attendees);
+      var eventsAttendingArray = req.user.eventsAttending
+      var index2 = eventsAttendingArray.indexOf(data._id)
+      eventsAttendingArray.splice(index2, 1)
+      console.log(index2);
+      console.log(eventsAttendingArray);
       req.flash('success', 'You have successfully withdrawn')
       res.redirect('/auth/profile/events')
     }
