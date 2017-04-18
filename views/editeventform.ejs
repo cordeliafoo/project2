@@ -5,9 +5,10 @@
   Event Date: <input type="Date" name="description" value="<%= event.startDate %>"><br>
   Event Name: <input type="text" name="eventName" value="<%= event.eventName%>"><br>
   Description: <input type="text" name="description" value="<%= event.date%>"><br>
-  Type of event: <input type= "text" name="typeOfEvent" value = "<%=event.typeOfEvent"> <br>
+  Type of event: <input type= "text" name="typeOfEvent" value = "<%=event.typeOfEvent%>"> <br>
   Location: <input type="text" name="location" value="<%= event.location %>"><br>
   Number of spots: <input type= "number" name="numberOfSpots" value = "event.numberOfSpots"> <br>
   Status: <input type="text" name="status" value="<%= event.status %>">
   <input type="submit" value="Submit">
+<a href ="/auth/profile/events/<%= event._id%>/myattendees"<button type="button" class="btn btn-default">View Attendees</button></a>
 </form>

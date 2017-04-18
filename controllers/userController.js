@@ -35,7 +35,7 @@ router.post('/login', passport.authenticate('local', {
 
 // full route:  /auth/profile //
 router.get('/profile', function (req, res) {
-  if(req.user){
+  if (req.user) {
     res.render('profile', {user: req.user, req: req.user})
   } else {
     req.flash('error', 'You need to log in to view your profile')
@@ -45,7 +45,7 @@ router.get('/profile', function (req, res) {
 
 // full route:  /auth/profile/events //
 router.get('/profile/events', function (req, res) {
-  if(req.user){
+  if (req.user) {
     User.findById(req.user.id)
     .populate('eventsOrganized')
     .populate('eventsAttending')
@@ -137,6 +137,44 @@ router.put('/profile/events/:id/edit', function (req, res) {
       return
     } else {
       res.redirect('/auth/profile/events/' + req.params.id)
+    }
+  })
+})
+// full route:  /auth/profile/events/:id/myattendees //
+router.get('/profile/events/:id/myattendees', function (req, res) {
+  var arrayOfAttendees = []
+  event.findById(req.params.id, function (err, event1) {
+    if (err)console.log(err)
+    else {
+      console.log(event1.attendees)
+      event1.attendees.forEach(function (eachAttendee) {
+        User.findById(eachAttendee, function (err, data) {
+          if (err)console.log(err)
+          arrayOfAttendees.push(data)
+          console.log('the array is' + arrayOfAttendees)
+          res.render('myattendees', {arrayOfAttendees: arrayOfAttendees, req: req.user})
+        })
+      })
+    }
+  })
+  // res.render('myattendees', {req: req.user})
+})
+
+router.get('/profile/events/:id/withdraw', function (req, res) {
+  event.findById(req.params.id, function (err, data) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('attendees for codingfest is ' + data.attendees);
+      console.log('tias userid is ' + req.user.id);
+      data.attendees.splice(data.attendees.indexOf(req.user.id), 1)
+      console.log('tia is attending' + req.user.eventsAttending[0]);
+      console.log('the event id is ' + req.params.id);
+      console.log('this is the index number ' + req.user.eventsAttending.indexOf(req.params.id));
+      req.user.eventsAttending.splice(req.user.eventsAttending.indexOf(req.params.id), 1)
+      console.log('this should be empty string ' +  req.user.eventsAttending[0]);
+      req.flash('success', 'You have successfully withdrawn')
+      res.redirect('/auth/profile/events')
     }
   })
 })
