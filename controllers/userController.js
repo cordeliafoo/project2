@@ -108,7 +108,7 @@ router.delete('/profile/events/:id', function (req, res) {
     console.log('delete')
     if (err) {
       console.log(err)
-      returns
+      return
     } else {
       User.findByIdAndUpdate(
         req.user.id,
@@ -140,46 +140,36 @@ router.put('/profile/events/:id/edit', function (req, res) {
     }
   })
 })
-// full route:  /auth/profile/events/:id/myattendees //
-router.get('/profile/events/:id/myattendees', function (req, res) {
-  var arrayOfAttendees = []
-  event.findById(req.params.id, function (err, event1) {
-    if (err)console.log(err)
-    else {
-      console.log(event1.attendees)
-      event1.attendees.forEach(function (eachAttendee) {
-        User.findById(eachAttendee, function (err, data) {
-          if (err)console.log(err)
-          arrayOfAttendees.push(data)
-          console.log('the array is' + arrayOfAttendees)
-          res.render('myattendees', {arrayOfAttendees: arrayOfAttendees, req: req.user})
-        })
-      })
-    }
-  })
-  // res.render('myattendees', {req: req.user})
-})
-
-router.get('/profile/events/:id/withdraw', function (req, res) {
+// full route:  auth/profile/events/:id:withdraw
+router.put('/profile/events/:id/withdraw', function (req, res) {
   event.findById(req.params.id, function (err, data) {
     if (err) {
       console.log(err)
     } else {
-      // console.log(data.attendees);
-      var index = data.attendees.indexOf(req.user.id)
-      // console.log(index)
-      data.attendees.splice(index, 1)
-      // console.log(data.attendees);
-      var eventsAttendingArray = req.user.eventsAttending
-      var index2 = eventsAttendingArray.indexOf(data._id)
-      eventsAttendingArray.splice(index2, 1)
-      console.log(index2);
-      console.log(eventsAttendingArray);
-      req.flash('success', 'You have successfully withdrawn')
-      res.redirect('/auth/profile/events')
+      event.update({
+        $pull: {attendees: req.user.id}},
+      function (err, data1) {
+        if (err) {
+          console.log(err)
+        }
+      })
+      User.findById(req.user.id, function (err, user) {
+        if (err) {
+          console.log(err)
+        } else {
+          user.update({$pull: {eventsAttending: data._id}}, function (err, data2) {
+            if (err) console.log(err)
+          }
+            )
+        }
+      })
     }
+    req.flash('success', 'You have successfully withdrawn')
+    res.redirect('/auth/profile/events')
+
   })
 })
+
 
 router.get('/logout', function (req, res) {
   req.logout()

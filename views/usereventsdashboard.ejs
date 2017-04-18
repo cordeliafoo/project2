@@ -64,7 +64,9 @@
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>
-          <td> <a href ="/auth/profile/events/<%= item._id%>/withdraw/"<button type="button" class="btn btn-default">Withdraw From Event</button></a></td>
+          <td><form  action="/auth/profile/events/<%= item._id%>/withdraw?_method=PUT" method="POST">
+          <button type="submit" value="Withdraw" class="btn btn-default">Withdraw</button>
+          </form></td>
           </tr>
           <% }) %>
     </tbody>
