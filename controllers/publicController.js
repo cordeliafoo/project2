@@ -37,9 +37,29 @@ router.get('/events/event/:id', function (req, res) {
 // if viewer is not signed in,
 // redirect them to log in or sign up page
 
+// full route: /public/events/event/:id/joinevent
 router.get('/events/event/:id/joinevent', function (req, res) {
   eventVar.findById(req.params.id, function (err, event) {
-    res.render('publiceventList', {event: event})
+    if(!req.user){
+      res.render('publiceventList', {event: event, req: req.user})
+    } else {
+      res.redirect()
+    }
+  })
+})
+router.put('/events/event/:id/joinevent', function (req, res) {
+  eventVar.findOne({_id: req.params.id}, function (err, event) {
+    if (err) {
+      console.log(err)
+      return
+    } else {
+      console.log(req);
+      event.attendees.push(req.user._id)
+      req.user.eventsAttending.push(req.params.id)
+      event.save()
+      req.user.save()
+      res.redirect('/public/events/event/' + req.params.id)
+    }
   })
 })
 
@@ -54,19 +74,5 @@ router.get('/events/event/:id/yourevent', function (req, res) {
 // if viewer signs up for event, update attenees array from the eventModel
 // update viewer's eventsAttending array to include said event.
 
-router.put('/events/event/:id/joinevent', function (req, res) {
-  eventVar.findOne({_id: req.params.id}, function (err, event) {
-    if (err) {
-      console.log(err)
-      return
-    } else {
-      event.attendees.push(req.user._id)
-      req.user.eventsAttending.push(req.params.id)
-      event.save()
-      req.user.save()
-      res.redirect('/public/events/event/' + req.params.id)
-    }
-  })
-})
 
 module.exports = router

@@ -12,7 +12,7 @@
    <p>AvailableSlots: <%= eachEvent.numberOfSpots %></p>
    <p>Status: <%= eachEvent.status%></p>
    <p>Attendees: <%= eachEvent.attendees%></p>
-   <form  action="/public/events/event/<%= event.id%>/joinevent?_method=PUT" method="POST">
+   <form  action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
    <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
    </form>
  <% }) %>

@@ -12,7 +12,7 @@ var session = require('express-session')
 var mongoose = require('mongoose')
 var ejsLayouts = require('express-ejs-layouts')
 var methodOverride = require('method-override')
-var passport = require('./config/passportconfig')
+var passport = require('./config/passportConfig')
 var isLoggedIn = require('./middleware/isLoggedIn')
 var multer = require('multer')
 var upload = multer({
@@ -98,7 +98,7 @@ app.use(isLoggedIn)
 
 
       // set the port
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log('app is running at ' + port)
 })
