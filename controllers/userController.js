@@ -1,5 +1,6 @@
 var User = require('../models/userModel')
 var Audio = require('../models/audioModel')
+var Image = require('../models/imageModel')
 var event = require('../models/eventModel')
 var passport = require('../config/passportConfig')
 var express = require('express')
@@ -58,6 +59,7 @@ router.get('/profile', function (req, res) {
   })
 })
 
+
 router.post('/profile', upload.single('myFile'), function (req, res) {
   cloudinary.uploader.upload(req.file.path, function (result) {
     console.log('trying to upload')
@@ -81,6 +83,35 @@ router.post('/profile', upload.single('myFile'), function (req, res) {
     })
   }, {resource_type: 'video'})
 })
+
+// ############ /auth/profile/updateProfile ############### //
+router.post('/profile/updateProfile', upload.single('profilePicture'), function(req, res){
+  console.log(req.file);
+  cloudinary.uploader.upload(req.file.path, function(result){
+    console.log('uploading profile pic')
+    User.findByIdAndUpdate(req.user.id, {image: result.url}, function(err, user){
+      if(err)console.log(err)
+      else {
+          req.flash('success', 'photo uploaded')
+          res.redirect('/auth/profile')
+      }
+    })
+  })
+})
+//
+// router.get('/profile/uploadpic', function(req, res){
+//   Image.find({user: req.user.id})
+//   .exec(function (err, image) {
+//     if (err) {
+//       console.log(err)
+//       return
+//     }
+//     console.log(image)
+//     res.render('/profile', {image: image, user: req.user, req: req.user})
+//   })
+//
+// })
+
 
 // ############ /auth/profile/events ############### //
 router.get('/profile/events', function (req, res) {
@@ -223,7 +254,10 @@ router.get('/profile/:id', function (req, res) {
   User.findById(req.params.id, function (err, foundUser) {
     if (err) console.log(err)
     else {
-      res.render('otherUser', {req: req.user, foundUser: foundUser})
+      Audio.find({user: req.params.id}, function(err, audioFiles){
+        if(err)console.log(err)
+        res.render('otherUser', {req: req.user, foundUser: foundUser, audioFiles: audioFiles})
+      })
     }
   })
 })

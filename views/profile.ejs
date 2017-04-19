@@ -1,16 +1,32 @@
 <h1>Hello <%- user.name %></h1>
-<p>this is your profile page</p>
+<% audio %>
+<% user %>
 
-<form enctype='multipart/form-data' action='/auth/profile' method='POST'>
-  Title: <input type="text" name="title">
-  Description: <input type="text" name="description">
-  Date: <input type="date" name="date">
-  <input type='file' name='myFile'>
+<form enctype='multipart/form-data' action='/auth/profile/updateProfile' method='POST'>
+  <input type='file' name='profilePicture'>
   <input type='submit' class='btn'>
 </form>
 
+<% if(user.image){ %>
+    <img src = '<%= user.image %>'>
+<% } %>
 
-<% audio %>
-<% audio.forEach(function (item, index) {%>
-  <a href ="/auth/profile/img/<%= item.id%>"><audio src="<%= item.audioProperties %>"></audio></a>
+
+<div>
+<% audio.forEach(function (item) {%>
+  <audio controls>
+    <a href = "auth/profile/audio/<%= item.id %>"></a>
+    <source src = "<%= item.audioProperties %>" type = 'audio/mp3'>
+  </audio>
+  <p><%= item.title %></p>
+  <p><%= item.description %></p>
 <% }) %>
+</div>
+
+<form enctype='multipart/form-data' action='/auth/profile' method='POST'>
+  <th>Upload your audio files</th>
+  <td>Track Title: <input type="text" name="title"></td>
+  <td><input type="text" name="description"></td>Description:
+  <input type='file' name='myFile'>
+  <input type='submit' class='btn'>
+</form>

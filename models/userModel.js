@@ -5,12 +5,19 @@ var eventModel = require('./eventModel')
 
 var userSchema = new mongoose.Schema({
   name: {type: String, require: true, minlength: [3, 'name must be between 3 and 50 characters'], maxlength: [50, 'name must be between 3 and 50 characters']},
+
   email: {type: String, require: true, unique: true, lowercase: true, match: emailRegex},
+
   password: {type: String, require: true, minlength: [8, 'name must be between 8 and 40 characters']},
-  images: {type: String},
+
+  image: {type: String},
+
   instruments: {type: String},
+
   memberSince: {type: Date, default: Date.now()},
+
   eventsOrganized: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],
+
   eventsAttending: [{type: mongoose.Schema.ObjectId, ref: 'Event'}]
 })
 

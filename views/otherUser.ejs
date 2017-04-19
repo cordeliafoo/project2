@@ -1,2 +1,12 @@
 this should show tia's profile
-<%= foundUser %>
+<%= audioFiles %>
+<div>
+  <h1><%= foundUser.name %>'s Profile</h1>
+</div>
+
+<% audioFiles.forEach(function(eachAudioFile){ %>
+  <audio controls>
+    <a href = "auth/profile/audio/<%= eachAudioFile.id %>"></a>
+    <source src = "<%= eachAudioFile.audioProperties %>" type = 'audio/mp3'>
+  </audio>
+<% })%>

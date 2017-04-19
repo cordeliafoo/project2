@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var User = require('../models/userModel')
 
 var audioSchema = new mongoose.Schema({
-  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  user: {type: mongoose.Schema.ObjectId, ref: 'User'},
   title: {type: String},
   description: {type: String},
   date: {type: Date, default: Date.now},
