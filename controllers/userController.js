@@ -32,7 +32,7 @@ router.get('/login', function (req, res) {
 })
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/auth/profile/',
-  successFlash: 'Login successful',
+  successFlash: 'Login successful!',
   failureRedirect: '/auth/login',
   failureFlash: 'Sorry you have entered invalid username/password'
 }))
@@ -74,20 +74,47 @@ router.post('/profile', upload.single('myFile'), function (req, res) {
   }, {resource_type: 'video'})
 })
 
-// ############ /auth/profile/updateProfile ############### //
-router.post('/profile/updateProfile', upload.single('profilePicture'), function (req, res) {
-  console.log(req.file)
-  cloudinary.uploader.upload(req.file.path, function (result) {
-    console.log('uploading profile pic')
-    User.findByIdAndUpdate(req.user.id, {image: result.url}, function (err, user) {
+
+
+// ############ /auth/profile/editprofile ############### //
+router.get('/profile/editprofile', isLoggedIn, function (req, res) {
+  res.render('editProfile', {req: req.user})
+})
+
+// ############ /auth/profile/editProfile ############### //
+router.post('/profile/editprofile', upload.single('profilePicture'), function (req, res) {
+  if (req.file) {
+    cloudinary.uploader.upload(req.file.path, function (result) {
+      console.log('uploading profile pic')
+      User.findByIdAndUpdate(req.user.id, {
+        image: result.url,
+        instruments: req.body.instruments,
+        genres: req.body.genres
+      }, function (err, user) {
+        if (err)console.log(err)
+        else {
+          req.flash('success', 'Profile updated')
+          res.redirect('/auth/profile')
+        }
+      })
+    })
+  } else {
+    User.findByIdAndUpdate(req.user.id, {
+      instruments: req.body.instruments,
+      genres: req.body.genres
+    }, function (err, user) {
       if (err)console.log(err)
       else {
-        req.flash('success', 'photo uploaded')
+        req.flash('success', 'Profile updated')
         res.redirect('/auth/profile')
       }
     })
-  })
+  }
 })
+
+
+
+
 
 // ############ /auth/profile/events ############### //
 router.get('/profile/events', isLoggedIn, function (req, res) {
@@ -238,7 +265,21 @@ router.get('/profile/:id', isLoggedIn, function (req, res) {
   })
 })
 
-router.get('/logout', isLoggedIn, function (req, res) {
+// ############ /auth/profile/:id ############### //
+router.delete('/profile/:id', function(req, res){
+  console.log('the id is' + req.params.id);
+  Audio.findByIdAndRemove({_id: req.params.id, }, function(err, foundAudio){
+    console.log('delete')
+    if(err) {
+      console.log(err)
+      return
+    } else {
+      res.redirect('/auth/profile')
+    }
+  })
+})
+
+router.get('/logout', function (req, res) {
   req.logout()
   console.log('logged out')
   res.redirect('/')

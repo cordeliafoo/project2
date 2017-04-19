@@ -14,6 +14,8 @@ var userSchema = new mongoose.Schema({
 
   instruments: {type: String},
 
+  genres: {type: String},
+
   memberSince: {type: Date, default: Date.now()},
 
   eventsOrganized: [{type: mongoose.Schema.ObjectId, ref: 'Event'}],

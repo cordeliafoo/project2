@@ -1,32 +1,69 @@
-<h1>Hello <%- user.name %></h1>
-<% audio %>
-<% user %>
+<div class="container center">
+    <h2>Hello <%- user.name %></h2>
+    <% audio %>
+        <% user %>
 
-<form enctype='multipart/form-data' action='/auth/profile/updateProfile' method='POST'>
-  <input type='file' name='profilePicture'>
-  <input type='submit' class='btn'>
-</form>
+            <div class="profile col-md-3 pull-md-9">
+                <% if(user.image){ %>
+                    <img src='<%= user.image %>'>
+                    <% } %>
+            </div>
+            <div class="profile col-md-9 push-md-3" <% if(user.instruments){ %>
+                <p>Instruments:
+                    <%= user.instruments %>
+                </p>
+                <% } %>
+                    <% if(user.genres){ %>
+                        <p>Genres:
+                            <%= user.genres %>
+                        </p>
+                        <% } %>
+            </div>
 
-<% if(user.image){ %>
-    <img src = '<%= user.image %>'>
-<% } %>
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th class='text-center'>Audio Clip</th>
+                        <th class='text-center'>Track Title</th>
+                        <th class='text-center'>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+      <% audio.forEach(function (item) {%>
+          <tr>
+        <td><audio controls>
+      <a href = "auth/profile/audio/<%= item.id %>"></a>
+      <source src = "<%= item.audioProperties %>" type = 'audio/mp3'>
+      </audio></td>
+          <td>
+              <%= item.title %>
+          </td>
+          <td>
+              <%= item.description %>
+          </td>
+          <td>
+          <form method="POST" action="/auth/profile/<%= item.id%>?_method=DELETE">
+          <button type="submit" value="Delete" class = 'btn btn-default'>Delete</button>
+          </form>
 
+          </td>
+       </tr>
+          <% }) %>
+  </tbody>
+</table>
 
-<div>
-<% audio.forEach(function (item) {%>
-  <audio controls>
-    <a href = "auth/profile/audio/<%= item.id %>"></a>
-    <source src = "<%= item.audioProperties %>" type = 'audio/mp3'>
-  </audio>
-  <p><%= item.title %></p>
-  <p><%= item.description %></p>
-<% }) %>
+<h4>Upload more audio files</h4>
+            <form enctype='multipart/form-data' action='/auth/profile' method='POST'>
+              <div class="form-group">
+                <label for="title">Track Title</label>
+                <input type="text" name="description" value="">
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" name="description" value="">
+              </div>
+                <input type='file' class='form-control-file' name='myFile'>
+                <input type='submit' class='btn.default'>
+            </form>
 </div>
-
-<form enctype='multipart/form-data' action='/auth/profile' method='POST'>
-  <th>Upload your audio files</th>
-  <td>Track Title: <input type="text" name="title"></td>
-  <td><input type="text" name="description"></td>Description:
-  <input type='file' name='myFile'>
-  <input type='submit' class='btn'>
-</form>
