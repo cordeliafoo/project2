@@ -21,6 +21,7 @@ var upload = multer({
 var cloudinary = require('cloudinary')
 var fs = require('fs')
 var image = require('./models/imageModel')
+var cheerio = require('cheerio')
 
 // initialize app
 var app = express()
@@ -87,7 +88,7 @@ var userController = require('./controllers/userController')
 
 app.use('/public', publicController)
 app.use('/auth', userController)
-app.use(isLoggedIn)
+// app.use(isLoggedIn)
 
 // set the port
 var port = process.env.PORT || 5000

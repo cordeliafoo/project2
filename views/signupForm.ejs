@@ -1,7 +1,18 @@
-<h1>Sign Up</h1>
-<form action="/auth/signup" method="POST" >
-  Name:<input type="text" name="name">
-  Email:<input type="text" name="email">
-  Password:<input type="password" name="password">
-  <input type='submit' value="Signup">
-</form>
+<div class="container col-md-4 col-md-offset-4">
+  <h3>Sign Up</h3>
+    <form action="/auth/signup" method="POST" >
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" value="">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" value="">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" value="">
+      </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
