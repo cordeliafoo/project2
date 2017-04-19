@@ -1,5 +1,5 @@
 var User = require('../models/userModel')
-var image = require('../models/imageModel')
+var Audio = require('../models/audioModel')
 var event = require('../models/eventModel')
 var passport = require('../config/passportConfig')
 var express = require('express')
@@ -8,7 +8,7 @@ var multer = require('multer')
 var cloudinary = require('cloudinary')
 var upload = multer({dest: './uploads/'})
 
-// full route:  /auth/signup //
+// ############ /auth/signup ############### //
 router.get('/signup', function (req, res) {
   res.render('signupForm', {req: req.user})
 })
@@ -24,26 +24,65 @@ router.post('/signup', function (req, res) {
   })
 })
 
-// full route:  /auth/login //
+// ############ /auth/login ############### //
 router.get('/login', function (req, res) {
   res.render('loginForm', {req: req.user})
 })
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/auth/profile/',
-  failureRedirect: '/auth/login'
+  successFlash: 'Login successful',
+  failureRedirect: '/auth/login',
+  failureFlash: 'Sorry you have entered invalid username/password'
 }))
 
-// full route:  /auth/profile //
+// ############ /auth/profile ############### //
+// router.get('/profile', function (req, res) {
+//   if (req.user) {
+//     res.render('profile', {user: req.user, req: req.user})
+//   } else {
+//     req.flash('error', 'You need to log in to view your profile')
+//     res.redirect('/auth/login')
+//   }
+// })
+
+// ############ /auth/profile ############### //
 router.get('/profile', function (req, res) {
-  if (req.user) {
-    res.render('profile', {user: req.user, req: req.user})
-  } else {
-    req.flash('error', 'You need to log in to view your profile')
-    res.redirect('/auth/login')
-  }
+  Audio.find({user: req.user.id})
+  .exec(function (err, audio) {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log(audio)
+    res.render('profile', {audio: audio, user: req.user, req: req.user})
+  })
 })
 
-// full route:  /auth/profile/events //
+router.post('/profile', upload.single('myFile'), function (req, res) {
+  cloudinary.uploader.upload(req.file.path, function (result) {
+    console.log('trying to upload')
+    User.findById(req.user.id, function (err, user) {
+      if (err)console.log(err)
+      Audio.create({
+        user: req.user.id,
+        title: req.user.title,
+        description: req.body.description,
+        date: req.body.date,
+        audioProperties: result.url
+      }, function (err, image) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('before redirect')
+          req.flash('success', 'File successfully uploaded')
+          res.redirect('/auth/profile')
+        }
+      })
+    })
+  }, {resource_type: 'video'})
+})
+
+// ############ /auth/profile/events ############### //
 router.get('/profile/events', function (req, res) {
   if (req.user) {
     User.findById(req.user.id)
@@ -61,7 +100,7 @@ router.get('/profile/events', function (req, res) {
   }
 })
 
-// full route:  /auth/profile/events/create-event  //
+// ############ /auth/profile/events/create-event ############### //
 router.get('/profile/events/create-event', function (req, res) {
   res.render('createnewevent', {user: req.user, req: req.user})
 })
@@ -95,14 +134,13 @@ router.post('/profile/events/create-event', function (req, res) {
     })
   })
 })
-// })
-// full route:  /auth/profile/events/:id  //
+
+// ############ /auth/profile/events/:id ############### //
 router.get('/profile/events/:id', function (req, res) {
   event.findById(req.params.id, function (err, event) {
     res.render('userindividualeventpage', {event: event, req: req.user})
   })
 })
-
 router.delete('/profile/events/:id', function (req, res) {
   event.findOneAndRemove({_id: req.params.id}, function (err, event) {
     console.log('delete')
@@ -124,7 +162,7 @@ router.delete('/profile/events/:id', function (req, res) {
   })
 })
 
-// full route:  /auth/profile/events/:id/edit //
+// ############ /auth/profile/events/:id/edit ############### //
 router.get('/profile/events/:id/edit', function (req, res) {
   event.findById(req.params.id, function (err, event) {
     res.render('editeventform', {event: event, req: req.user})
@@ -140,7 +178,18 @@ router.put('/profile/events/:id/edit', function (req, res) {
     }
   })
 })
-// full route:  auth/profile/events/:id:withdraw
+
+// ############ /auth/profile/events/:id/myattendees ############### //
+router.get('/profile/events/:id/myattendees', function (req, res) {
+  event.findById(req.params.id).populate('attendees').exec(function (err, event1) {
+    if (err) console.log(err)
+    else {
+      res.render('myattendees', {arrayOfAttendees: event1.attendees, req: req.user})
+    }
+  })
+})
+
+// ############ /auth/profile/events/:id/withdraw ############### //
 router.put('/profile/events/:id/withdraw', function (req, res) {
   event.findById(req.params.id, function (err, data) {
     if (err) {
@@ -166,10 +215,18 @@ router.put('/profile/events/:id/withdraw', function (req, res) {
     }
     req.flash('success', 'You have successfully withdrawn')
     res.redirect('/auth/profile/events')
-
   })
 })
 
+// ############ /auth/profile/:id ############### //
+router.get('/profile/:id', function (req, res) {
+  User.findById(req.params.id, function (err, foundUser) {
+    if (err) console.log(err)
+    else {
+      res.render('otherUser', {req: req.user, foundUser: foundUser})
+    }
+  })
+})
 
 router.get('/logout', function (req, res) {
   req.logout()

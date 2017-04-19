@@ -54,13 +54,15 @@ router.put('/events/event/:id/joinevent', function (req, res) {
       console.log(err)
       return
     } else {
-      if (req.user) {
-        console.log('the user object is' + req.user);
+      if (req.user && event.numberOfSpots) {
+        console.log('the user object is' + req.user)
         event.update({
-          $push: {attendees: req.user}},
+          $push: {attendees: req.user},
+          $set: {numberOfSpots: event.numberOfSpots-1}},
         function (err, data) {
           if (err) console.log(err)
         })
+        //reduce the number of spots by 1
         event.save()
         // console.log(event);
         User.findById(req.user._id, function (err, user) {
@@ -77,8 +79,14 @@ router.put('/events/event/:id/joinevent', function (req, res) {
         req.flash('success', 'Your attendance has been saved')
         res.redirect('/public/events/event/' + req.params.id)
       } else {
-        req.flash('error', 'You need to be logged in to join event')
-        res.redirect('auth/login')
+        if(!req.user){
+          req.flash('error', 'Please log in to join event')
+          // res.redirect('auth/login')
+          res.redirect('/public/events')
+        } else if(!event.numberOfSpots){
+          req.flash('error', 'Sorry, this event is already full!')
+          res.redirect('/public/events')
+        }
       }
     }
   })

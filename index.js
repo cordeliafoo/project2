@@ -78,27 +78,19 @@ app.use(function (req, res, next) {
 })
 
 // set up the routes
-
 app.get('/', function (req, res) {
   console.log(req.body)
   res.render('landing', {req: req.user})
 })
 var publicController = require('./controllers/publicController')
 var userController = require('./controllers/userController')
-// app.get('/settings',
-//   ensureLoggedIn('/login'),
-//   function(req, res) {
-//     res.render('settings', { user: req.user });
-//   });
+
 app.use('/public', publicController)
 app.use('/auth', userController)
 app.use(isLoggedIn)
 
-// app.get('/account', auth.restrict, routes.account)
-
-
-      // set the port
-var port = process.env.PORT || 3000
+// set the port
+var port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log('app is running at ' + port)
 })

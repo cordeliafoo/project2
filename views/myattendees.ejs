@@ -1,5 +1,3 @@
-<% arrayOfAttendees %>
-
 <% arrayOfAttendees.forEach(function(attendee) {%>
-<p><%= attendee.name %></p>
+  <a href ="/auth/profile/<%= attendee.id%>"><%= attendee.name %></a>
 <% }) %>
