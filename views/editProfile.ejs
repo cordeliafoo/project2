@@ -3,6 +3,11 @@
   <form enctype='multipart/form-data' action='/auth/profile/editprofile' method='post'>
     <h2>Update Profile</h2>
     <div class="form-group">
+      <label for='name'>Name</label>
+      <input type="text" name="name" value="<%=req.name %>">
+    </div>
+
+    <div class="form-group">
       <label for='instruments'>Instruments</label>
       <input type="text" name="instruments" value="<%=req.instruments %>">
     </div>
