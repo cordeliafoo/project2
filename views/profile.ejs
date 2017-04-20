@@ -1,8 +1,7 @@
-<div class="container moveDown">
+  <div class="container moveDown">
     <h2 id='greeting'>Hello <%- user.name %></h2>
     <% audio %>
     <% user %>
-
     <div id="profileDiv">
       <div class="col-md-2 pull-md-10">
         <% if(user.image){ %>
@@ -11,66 +10,63 @@
         </div>
         <div class="col-md-10 push-md-2">
           <% if(user.instruments){ %>
-            <ul class = 'list-group'>
-            <li class='list-group-item'>Instruments:<%= user.instruments %></li>
+            <li class='list-group-item text-left'>Instruments:<%= user.instruments %></li>
             </ul>
-           <% } %>
+            <% } %>
             <% if(user.genres){ %>
-              <ul class='list-group'>
-              <li class='list-group-item'>Genres:<%= user.genres %></li>
+              <li class='list-group-item text-left'>Genres:<%= user.genres %></li>
               <% } %>
-        </div>
-    </div>
+            </div>
+          </div>
 
-    <table class="table table-hover text-center" id='tableAudioTracks'>
-      <% if(audio.length > 0) { %>
-      <thead>
-          <tr>
+
+          <table class="table table-hover text-center" id='tableAudioTracks'>
+            <% if(audio.length > 0) { %>
+              <thead>
+              <tr>
               <th class='text-center'>Audio Clips</th>
               <th class='text-center'>Track Title</th>
               <th class='text-center'>Description</th>
               <th></th>
-          </tr>
-      </thead>
-      <tbody>
-          <% audio.forEach(function (item) {%>
-          <tr>
-            <td><audio controls>
-            <a href = "auth/profile/audio/<%= item.id %>"></a>
-            <source src = "<%= item.audioProperties %>" type = 'audio/mp3'>
-            </audio>
-            </td>
-            <td>
-            <%= item.title %>
-            </td>
-            <td>
-            <%= item.description %>
-            </td>
-            <td>
-              <form method="POST" action="/auth/profile/<%= item.id%>?_method=DELETE">
-              <button type="submit" value="Delete" class = 'btn btn-default'>Delete</button>
+              </tr>
+              </thead>
+              <tbody>
+              <% audio.forEach(function (item) {%>
+                <tr>
+                <td><audio controls>
+                <a href = "auth/profile/audio/<%= item.id %>"></a>
+                <source src = "<%= item.audioProperties %>" type = 'audio/mp3'>
+                </audio>
+                </td>
+                <td>
+                <%= item.title %>
+                </td>
+                <td>
+                <%= item.description %>
+                </td>
+                <td>
+                <form method="POST" action="/auth/profile/<%= item.id%>?_method=DELETE">
+                <button type="submit" value="Delete" class = 'btn btn-default'>Delete</button>
               </form>
-           </td>
+            </td>
           </tr>
           <% }) %>
-         <% } %>
-         </tbody>
-    </table>
+          <% } %>
+        </tbody>
+      </table>
 
-   <div class="container col-md-4 col-md-offset-4">
-
-     <form enctype='multipart/form-data' action='/auth/profile' method='POST' id='uploadAudioForm'>
-       <h4>Upload your audio files</h4>
-       <div class="form-group">
-         <label for="title">Track Title</label>
-         <input type="text" name="title" value="">
-       </div>
-       <div class="form-group">
-         <label for="description">Description</label>
-         <input type="text" name="description" value="">
-       </div>
-       <input type='file' class='form-control-file' name='myFile'>
-       <input type='submit' class='btn btn-default'>
-     </form>
-   </div>
-</div>
+        <form enctype='multipart/form-data' action='/auth/profile' method='POST' id='uploadAudioForm'>
+          <h4>Upload your audio files</h4>
+          <div class="form-group">
+            <label for="title">Track Title</label>
+            <input type="text" name="title" value="">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" value="">
+          </div>
+          <input type='file' class='form-control-file' name='myFile'>
+          <input type='submit' class='btn btn-default'>
+        </form>
+      </div>
+  </div>

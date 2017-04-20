@@ -124,6 +124,7 @@ router.get('/profile/events', isLoggedIn, function (req, res) {
     .populate('eventsAttending')
     .exec(function (err, user) {
       if (err) console.log(err)
+      console.log('checking time' + user);
       res.render('usereventsdashboard', {
         user: user,
         req: req.user})
@@ -155,6 +156,7 @@ router.post('/profile/events/create-event', function (req, res) {
       console.log(err)
       return
     } else {
+
         User.findById(req.user.id, function (err, user) {
           // console.log('user', user)
           // console.log(event._id)

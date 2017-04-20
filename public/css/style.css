@@ -48,11 +48,12 @@ body {
     background-position: center;
     -webkit-background-size: cover;
     background-size: cover;
-    color: white;
+    color: black;
     /*margin-top: -10px;*/
     text-align: center;
     /*text-shadow:-2px 0 #000000,0 2px #000000,5px 0 #000000,0 -1px #000000;*/
 }
+
 
 .nav-bar {
   margin-bottom: 0px;
@@ -71,7 +72,7 @@ label{
 }
 
 #eventsYoureAttending{
-  margin-top: 10%;
+  margin-top: 3%;
 }
 
 #eventsYouOrganized{
@@ -79,11 +80,11 @@ label{
 }
 
 #tableAudioTracks{
-  margin-top: 10%;
+  margin-top: 15%;
 }
 
 #uploadAudioForm{
-  margin-top: 20%;
+  margin-top: 10%;
   border-radius: 10%;
 }
 
@@ -92,7 +93,7 @@ label{
 }
 
 .moveDown{
-  margin-top: 5%;
+ margin-top: 4%;
 }
 
 #profileDiv{
