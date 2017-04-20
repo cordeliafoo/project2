@@ -83,6 +83,10 @@ label{
   margin-top: 15%;
 }
 
+#tableAudioTracksOtherUser {
+  margin-top: 5%;
+}
+
 #uploadAudioForm{
   margin-top: 10%;
   border-radius: 10%;
@@ -93,9 +97,12 @@ label{
 }
 
 .moveDown{
- margin-top: 4%;
+ margin-top: 5%;
 }
 
+.moveDownLess{
+  margin-top: 8%;
+}
 #profileDiv{
   margin-bottom: 5%;
 }
