@@ -25,7 +25,7 @@ npm install
 ## Live Version
 
 This app is deployed on https://meetandjam.herokuapp.com
-![demo](https://github.com/shirongfoo/project2/READMEImages/meet_jam.mp4)
+![demo](https://github.com/shirongfoo/project2/blob/master/READMEImages/meet_jam.gif)
 
 
 ## Built With
@@ -48,11 +48,11 @@ This app is deployed on https://meetandjam.herokuapp.com
 
 ## Work Flow
 User stories and task tracking done using trello
-![trelloworkflow](https://github.com/shirongfoo/project2/READMEImages/trelloWorkflow.png)
+![trelloworkflow](https://github.com/shirongfoo/project2/blob/master/READMEImages/trelloWorkflow.png)
 
 ## WireFrames and ERD Sketches
-![wireframe](http://github.com/shirongfoo/project2/READMEImages/wireframe.png)
-![erdDiagram](http://github.com/shirongfoo/project2/READMEImages/erd.png)
+![wireframe](https://github.com/shirongfoo/project2/blob/master/READMEImages/wireframe.png)
+![erdDiagram](https://github.com/shirongfoo/project2/blob/master/READMEImages/erd.png)
 
 
 ## Development
