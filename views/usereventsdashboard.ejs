@@ -22,7 +22,7 @@
         <%user%>
         <% user.eventsOrganized.forEach(function (item) {%>
           <tr>
-          <td><%= item.startDate.toTimeString()%></td>
+          <td><%= item.startDate%></td>
           <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
