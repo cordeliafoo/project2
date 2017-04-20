@@ -54,7 +54,7 @@ router.put('/events/event/:id/joinevent', function (req, res) {
       console.log(err)
       return
     } else {
-      if (req.user && event.numberOfSpots) {
+      if (req.user && event.numberOfSpots && event.attendees.indexOf(req.user._id) < 0) {
         console.log('the user object is' + req.user)
         //reduce the number of spots by 1
         event.update({
@@ -86,6 +86,10 @@ router.put('/events/event/:id/joinevent', function (req, res) {
         } else if(!event.numberOfSpots){
           req.flash('error', 'Sorry, this event is already full!')
           res.redirect('/public/events')
+        } else if(event.attendees.indexOf(req.user._id) > 0){
+          req.flash('error', 'You have already joined this event')
+          res.redirect('/public/events')
+
         }
       }
     }
