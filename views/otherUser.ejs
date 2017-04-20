@@ -1,12 +1,58 @@
-this should show tia's profile
 <%= audioFiles %>
-<div>
+<div class='container moveDown'>
   <h1><%= foundUser.name %>'s Profile</h1>
+  <div id="profileDiv">
+    <div class="col-md-2 pull-md-10">
+      <% if(foundUser.image){ %>
+        <img src='<%= foundUser.image %>'>
+        <% } %>
+      </div>
+      <div class="col-md-10 push-md-2">
+        <% if(foundUser.instruments){ %>
+          <ul class = 'list-group'>
+          <li class='list-group-item'>Instruments:<%= foundUser.instruments %></li>
+          </ul>
+         <% } %>
+          <% if(foundUser.genres){ %>
+            <ul class='list-group'>
+            <li class='list-group-item'>Genres:<%= foundUser.genres %></li>
+            <% } %>
+      </div>
+  </div>
 </div>
 
-<% audioFiles.forEach(function(eachAudioFile){ %>
-  <audio controls>
-    <a href = "auth/profile/audio/<%= eachAudioFile.id %>"></a>
-    <source src = "<%= eachAudioFile.audioProperties %>" type = 'audio/mp3'>
-  </audio>
-<% })%>
+<table class="table table-hover text-center" id='tableAudioTracks'>
+  <% if(audioFiles.length > 0) { %>
+  <thead>
+      <tr>
+          <th class='text-center'>Audio Clips</th>
+          <th class='text-center'>Track Title</th>
+          <th class='text-center'>Description</th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <% audioFiles.forEach(function (eachAudioFile) {%>
+      <tr>
+        <td><audio controls>
+        <a href = "auth/profile/audio/<%= eachAudioFile.id %>"></a>
+        <source src = "<%= eachAudioFile.audioProperties %>" type = 'audio/mp3'>
+        </audio>
+        </td>
+        <td>
+        <%= eachAudioFile.title %>
+        </td>
+        <td>
+        <%= eachAudioFile.description %>
+        </td>
+        <td>
+          <form method="POST" action="/auth/profile/<%= eachAudioFile.id%>?_method=DELETE">
+          <button type="submit" value="Delete" class = 'btn btn-default'>Delete</button>
+          </form>
+       </td>
+      </tr>
+      <% }) %>
+     <% } %>
+     </tbody>
+</table>
+</div

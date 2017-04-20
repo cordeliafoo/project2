@@ -1,3 +1,6 @@
-<% arrayOfAttendees.forEach(function(attendee) {%>
-  <a href ="/auth/profile/<%= attendee.id%>"><%= attendee.name %></a>
-<% }) %>
+<div class="list-group moveDown">
+  <h2>List of Attendees</h2>
+  <% arrayOfAttendees.forEach(function(attendee) {%>
+    <a href="/auth/profile/<%= attendee.id%>" class="list-group-item"><%= attendee.name %></a>
+  <% }) %>
+</div>

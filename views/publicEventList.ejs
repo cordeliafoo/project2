@@ -1,9 +1,19 @@
-<div class="container">
+<div class="container moveDown">
 <% event %>
   <h1>More about <%= event.eventName %></h1>
-  <p>Organizer: <%= event.organizerName%></p>
-  <p>Type of Event : <%= event.typeOfEvent%></p>
-  <p>Description: <%= event.description%></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Organizer</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <td><%= event.organizerName%></td>
+      <td> <%= event.description%></td>
+    </tbody>
+  </table>
+
 </div>
 
 </div>

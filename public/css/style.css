@@ -8,7 +8,7 @@ html {
 }*/
 
 body {
-  padding-top: 70px;
+  /*padding-top: 70px;*/
   padding-bottom: 30px;
 }
 
@@ -40,7 +40,7 @@ body {
 }
 
 .jumbotron {
-    background-image: url("/images/background3.jpeg");
+    background-image: url("/images/background5.jpeg");
     background-color: white;
     margin-bottom: 0;`enter code here`
     min-height: 50%;
@@ -49,8 +49,9 @@ body {
     -webkit-background-size: cover;
     background-size: cover;
     color: white;
-    margin-top: -20px;
+    /*margin-top: -10px;*/
     text-align: center;
+    /*text-shadow:-2px 0 #000000,0 2px #000000,5px 0 #000000,0 -1px #000000;*/
 }
 
 .nav-bar {
@@ -67,4 +68,37 @@ label{
 
 .table th{
   text-align: center;
+}
+
+#eventsYoureAttending{
+  margin-top: 10%;
+}
+
+#eventsYouOrganized{
+  margin-top: 4%;
+}
+
+#tableAudioTracks{
+  margin-top: 10%;
+}
+
+#uploadAudioForm{
+  margin-top: 20%;
+  border-radius: 10%;
+}
+
+.btn-default{
+  margin-top: 1%;
+}
+
+.moveDown{
+  margin-top: 5%;
+}
+
+#profileDiv{
+  margin-bottom: 5%;
+}
+
+#greeting{
+  margin-bottom: 5%;
 }

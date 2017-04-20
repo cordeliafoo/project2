@@ -1,8 +1,8 @@
-<div class='container'>
+<div class='container moveDown'>
   <h1>Your events</h1>
 
-  <h3 class='col-ml-3 control-label pull-left'>Events you organized</h3>
-  <form class="form-horizontal">
+  <form class="form-horizontal" id='eventsYouOrganized'>
+    <h3 class='col-ml-3 control-label pull-left'>Events you organized</h3>
     <div class="form-group">
       <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default pull-right col-ml-1">Organize new event</button></a>
     </div>
@@ -10,10 +10,10 @@
   <table class='table'>
     <thead>
       <tr>
-        <th>Event Date</th>
+        <th>Date/Time</th>
         <th>Event Name</th>
         <th>Location</th>
-        <th>Number of Available Spots</th>
+        <th>Available Spots</th>
         <th>Status</th>
         <th>Attendees</th>
         <th></th>
@@ -36,18 +36,18 @@
   </table>
 
 
-  <form class="form-horizontal">
+  <form class="form-horizontal" id="eventsYoureAttending">
     <div class="form-group">
-      <h3 class='col-ml-3 control-label pull-left'>Events you're attending</h3>
+      <h3>Events you're attending</h3>
     </div>
   </form>
   <table class='table'>
     <thead>
       <tr>
-        <th>Event Date</th>
+        <th>Date/Time</th>
         <th>Event Name</th>
         <th>Location</th>
-        <th>Number of Available Spots</th>
+        <th>Available Spots</th>
         <th>Status</th>
         <th>Attendees</th>
         <th></th>

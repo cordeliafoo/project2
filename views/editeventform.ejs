@@ -1,14 +1,37 @@
-<h1>Edit Event Form</h1>
-    <% event %>
+<div class="container col-md-4 col-md-offset-4 vertical-center">
+<% event %>
 
 <form method="POST" action="/auth/profile/events/<%=event.id%>/edit?_method=PUT">
-  Event Date: <input type="Date" name="description" value="<%= event.startDate %>"><br>
-  Event Name: <input type="text" name="eventName" value="<%= event.eventName%>"><br>
-  Description: <input type="text" name="description" value="<%= event.date%>"><br>
-  Type of event: <input type= "text" name="typeOfEvent" value = "<%=event.typeOfEvent%>"> <br>
-  Location: <input type="text" name="location" value="<%= event.location %>"><br>
-  Number of spots: <input type= "number" name="numberOfSpots" value = "event.numberOfSpots"> <br>
-  Status: <input type="text" name="status" value="<%= event.status %>">
-  <input type="submit" value="Submit">
-<a href ="/auth/profile/events/<%= event._id%>/myattendees"<button type="button" class="btn btn-default">View Attendees</button></a>
+  <h3>Edit Event</h3>
+  <div class="form-group">
+    <label for="startDate">Date/Time</label>
+    <input type="datetime-local" name="startDate" value="<%= event.startDate %>">
+  </div>
+  <div class="form-group">
+    <label for="eventName">Event Name</label>
+    <input type="text" name="eventName" value="<%= event.eventName%>">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" name="description" value="<%= event.description%>">
+  </div>
+  <div class="form-group">
+    <label for="typeOfEvent">Type of Event</label>
+    <input type="text" name="typeOfEvent" value="<%= event.typeOfEvent%>">
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input type="text" name="location" value="<%= event.location%>">
+  </div>
+  <div class="form-group">
+    <label for="numberOfSpots">Available Spots</label>
+    <input type="text" name="numberOfSpots" value="<%= event.numberOfSpots%>">
+  </div>
+  <div class="form-group">
+    <label for="status">Status</label>
+    <input type="text" name="status" value="<%= event.status%>">
+  </div>
+  <button type="submit" name="button" class="btn btn-default ">Submit</button>
+
 </form>
+</div>
