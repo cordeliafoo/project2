@@ -23,8 +23,10 @@ npm install
 ```
 
 ## Live Version
-###This app is deployed on https://meetandjam.herokuapp.com
-###![demo](https://github.com/shirongfoo/project2/blob/master/READMEImages/meet_jam.gif)
+This app is deployed on https://meetandjam.herokuapp.com
+
+## Demo
+![demo](https://github.com/shirongfoo/project2/blob/master/READMEImages/meet_jam.gif)
 
 
 ## Built With
