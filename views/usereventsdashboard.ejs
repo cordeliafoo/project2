@@ -1,9 +1,9 @@
 <div class='container'>
   <h1>Your events</h1>
 
+  <h3 class='col-ml-3 control-label pull-left'>Events you organized</h3>
   <form class="form-horizontal">
     <div class="form-group">
-      <h3 class='col-ml-3 control-label pull-left'>Events you organized</h3>
       <a href ="/auth/profile/events/create-event"<button type="button" class="btn btn-default pull-right col-ml-1">Organize new event</button></a>
     </div>
   </form>
@@ -12,11 +12,10 @@
       <tr>
         <th>Event Date</th>
         <th>Event Name</th>
-        <th>Description</th>
         <th>Location</th>
-        <th>Number of Spots</th>
-        <th>Attendees</th>
+        <th>Number of Available Spots</th>
         <th>Status</th>
+        <th>Attendees</th>
         <th></th>
       </tr>
     </thead>
@@ -26,11 +25,10 @@
           <tr>
           <td><%= item.startDate%></td>
           <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
-          <td><%= item.description%></td>
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
+          <td><%= item.status%></td>
           <td><a href ="/auth/profile/events/<%= item.id%>/myattendees"<button type="button" class="btn btn-default">View Attendees</button></a></td>
-          <td><%= item.numberOfSpots%></td>
           <td> <a href ="/auth/profile/events/<%= item.id%>"<button type="button" class="btn btn-default">Edit Event</button></a></td>
           </tr>
           <% }) %>
@@ -48,10 +46,10 @@
       <tr>
         <th>Event Date</th>
         <th>Event Name</th>
-        <th>Description</th>
         <th>Location</th>
-        <th>Number of Spots</th>
+        <th>Number of Available Spots</th>
         <th>Status</th>
+        <th>Attendees</th>
         <th></th>
       </tr>
     </thead>
@@ -59,11 +57,11 @@
         <% user.eventsAttending.forEach(function (item) {%>
           <tr>
           <td><%= item.startDate%></td>
-          <td><%= item.eventName%></td>
-          <td><%= item.description%></td>
+          <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>
+          <td><a href ="/auth/profile/events/<%= item.id%>/myattendees"<button type="button" class="btn btn-default">View Attendees</button></a></td>
           <td><form  action="/auth/profile/events/<%= item._id%>/withdraw?_method=PUT" method="POST">
           <button type="submit" value="Withdraw" class="btn btn-default">Withdraw</button>
           </form></td>

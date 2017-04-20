@@ -1,19 +1,33 @@
-<h1>Events</h1>
-<% event %>
-
-<div>
- <% event.forEach(function(eachEvent){ %>
-   <p>Organizer: <%= eachEvent.organizerName%></p>
-   <p>Event Name: <%= eachEvent.eventName %> </p>
-   <p>Event Date: <%= eachEvent.startDate%></p>
-   <p>Event Type : <%= eachEvent.typeOfEvent%></p>
-   <p>Description: <%= eachEvent.description%></p>
-   <p>Location: <%= eachEvent.location%></p>
-   <p>Number of Spots: <%= eachEvent.numberOfSpots %></p>
-   <p>Number of Attendees: <%= eachEvent.attendees.length %></p>
-   <p>Status: <%= eachEvent.status%></p>
-   <form  action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
-   <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
-   </form>
- <% }) %>
+<div class="container">
+  <% event %>
+  <h1>All Events</h1>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>Organizer</th>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Number of Available Spots</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% event.forEach(function(eachEvent){ %>
+          <tr>
+          <td><%= eachEvent.organizerName%></td>
+          <td><%= eachEvent.eventName %> </td>
+          <td><%= eachEvent.startDate%></td>
+          <td><%= eachEvent.description%></td>
+          <td><%= eachEvent.numberOfSpots %></td>
+          <td><%= eachEvent.status%></td>
+          <td><form action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
+          <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
+          </form>
+          </td>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
 </div>

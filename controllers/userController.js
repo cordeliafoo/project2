@@ -57,7 +57,7 @@ router.post('/profile', upload.single('myFile'), function (req, res) {
       if (err)console.log(err)
       Audio.create({
         user: req.user.id,
-        title: req.user.title,
+        title: req.body.title,
         description: req.body.description,
         date: req.body.date,
         audioProperties: result.url
@@ -154,20 +154,32 @@ router.post('/profile/events/create-event', function (req, res) {
     if (err) {
       console.log(err)
       return
-    }
-    User.findById(req.user.id, function (err, user, done) {
-      // console.log('user', user)
-      // console.log(event._id)
-      if (err)console.log(err)
-      user.update({
-        $push: { eventsOrganized: event._id }},
-         function (err, user2) {
-           if (err) return console.log(err)
-           res.redirect('/auth/profile/events')
-         })
-    })
+    } else {
+        User.findById(req.user.id, function (err, user) {
+          // console.log('user', user)
+          // console.log(event._id)
+          if (err)console.log(err)
+          user.update({
+            $push: { eventsOrganized: event._id }},
+            function (err, user2) {
+              if (err) return console.log(err)
+              res.redirect('/auth/profile/events')
+            })
+          })
+          console.log(event);
+          console.log(req.user);
+          event.update({
+            $push: {attendees: req.user}}, function(err, data){
+              if(err) console.log(err);
+            }
+          )
+          event.save()
+          console.log('function ran');
+
+        }
+      }
+    )
   })
-})
 
 // ############ /auth/profile/events/:id ############### //
 router.get('/profile/events/:id', isLoggedIn, function (req, res) {
@@ -229,8 +241,9 @@ router.put('/profile/events/:id/withdraw', function (req, res) {
     if (err) {
       console.log(err)
     } else {
-      event.update({
-        $pull: {attendees: req.user.id}},
+      data.update({
+        $pull: {attendees: req.user.id},
+        $set: {numberOfSpots: data.numberOfSpots + 1}},
       function (err, data1) {
         if (err) {
           console.log(err)

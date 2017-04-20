@@ -56,13 +56,13 @@ router.put('/events/event/:id/joinevent', function (req, res) {
     } else {
       if (req.user && event.numberOfSpots) {
         console.log('the user object is' + req.user)
+        //reduce the number of spots by 1
         event.update({
           $push: {attendees: req.user},
           $set: {numberOfSpots: event.numberOfSpots-1}},
         function (err, data) {
           if (err) console.log(err)
         })
-        //reduce the number of spots by 1
         event.save()
         // console.log(event);
         User.findById(req.user._id, function (err, user) {

@@ -1,9 +1,18 @@
-<form enctype='multipart/form-data' action='/auth/profile/editprofile' method='post'>
-  Upload profile picture
-  <input type='file' name='profilePicture'>
-  <label for="instruments">Instruments</label>
-  <input type="text" name="instruments" value="">
-  <label for="genres">Genres</label>
-  <input type="text" name="genres" value="">
-  <input type="submit" class='btn'>
+<div class="container col-md-4 col-md-offset-4">
+  <h3>Update Profile</h3>
+  <form enctype='multipart/form-data' action='/auth/profile/editprofile' method='post'>
+    <div class="form-group">
+      <label for='instruments'>Instruments</label>
+      <input type="text" name="instruments" value="">
+    </div>
+    <div class="form-group">
+      <label for='genres'>Genres</label>
+      <input type="text" name="genres" value="">
+    </div>
+    <div class="form-group">
+      <label for="profilePicture">Upload Profile Picture</label>
+      <input type='file' name='profilePicture'>
+    </div>
+    <button type="submit" class='btn btn-default '>Submit</button>
 </form>
+</div>
