@@ -1,13 +1,14 @@
+<%req%>
 <div class="container col-md-4 col-md-offset-4 vertical-center">
   <form enctype='multipart/form-data' action='/auth/profile/editprofile' method='post'>
     <h2>Update Profile</h2>
     <div class="form-group">
       <label for='instruments'>Instruments</label>
-      <input type="text" name="instruments" value="">
+      <input type="text" name="instruments" value="<%=req.instruments %>">
     </div>
     <div class="form-group">
       <label for='genres'>Genres</label>
-      <input type="text" name="genres" value="">
+      <input type="text" name="genres" value="<%= req.genres %>">
     </div>
     <div class="form-group">
       <label for="profilePicture">Attach Profile Picture</label>
