@@ -55,34 +55,6 @@ User stories and task tracking done using trello
 ![wireframe](https://github.com/shirongfoo/project2/blob/master/READMEImages/wireframe.png)
 ![erdDiagram](https://github.com/shirongfoo/project2/blob/master/READMEImages/erd.png)
 
-## Controllers
-### Controllers
-1. User Controller
-2. Public Controller
-
-### Routes
-User Routes
-| ------------- |:-------------:| -----:|
-| /auth/signup   | .get          | .post |
-| /auth/login    | .get          | .post |
-| /auth/profile/editprofile | .get      |   .post |
-| /auth/profile/events | .get   |   
-| /auth/profile/create-event | .get      |  .post |
-| /auth/profile/events/:id | .get      |  .delete |
-| /auth/profile/events/:id/edit | .get      |  .put |
-| /auth/profile/events/:id/myattendees | .get      |
-| /auth/profile/events/:id/withdraw | .put      |
-| /auth/profile/:id | .get      |
-| /auth/profile/:id | .delete      |
-| /auth/logout | .get      |
-
-Public Routes
-| /public/events   | .get          | .post |
-| /public/events/event/:id    | .get          |
-| /public/events/event/:id/joinevent | .get      |   .put |
-| /public/events/event/:id/yourevent | .get      |   
-
-
 ## Development
 ### Some challenges I faced
 #### 1. Handling audio uploads with cloudinary
