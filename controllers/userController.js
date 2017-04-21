@@ -112,10 +112,6 @@ router.post('/profile/editprofile', upload.single('profilePicture'), function (r
   }
 })
 
-
-
-
-
 // ############ /auth/profile/events ############### //
 router.get('/profile/events', isLoggedIn, function (req, res) {
   if (req.user) {
