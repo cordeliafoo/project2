@@ -15,16 +15,16 @@
       </thead>
       <tbody>
         <% event.forEach(function(eachEvent){ %>
-          <tr>
-          <td><%= eachEvent.eventName %> </td>
-          <td><%= eachEvent.startDate%></td>
-          <td><%= eachEvent.description%></td>
-          <td><%= eachEvent.numberOfSpots %></td>
-          <td><form action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
-          <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
-          </form>
-          </td>
-          </tr>
+            <tr>
+            <td><%= eachEvent.eventName %> </td>
+            <td><%= eachEvent.startDate%></td>
+            <td><%= eachEvent.description%></td>
+            <td><%= eachEvent.numberOfSpots %></td>
+            <td><form action="/public/events/event/<%= eachEvent._id%>/joinevent?_method=PUT" method="POST">
+            <button type="submit" value="Join this event" class="btn btn-default">Join this event</button>
+            </form>
+            </td>
+            </tr>
           <% }) %>
         </tbody>
       </table>

@@ -227,7 +227,10 @@ router.put('/profile/events/:id/edit', function (req, res) {
 
 // ############ /auth/profile/events/:id/myattendees ############### //
 router.get('/profile/events/:id/myattendees', isLoggedIn, function (req, res) {
-  event.findById(req.params.id).populate('attendees').exec(function (err, event1) {
+  event
+  .findById(req.params.id)
+  .populate('attendees')
+  .exec(function (err, event1) {
     if (err) console.log(err)
     else {
       res.render('myattendees', {arrayOfAttendees: event1.attendees, req: req.user})
@@ -279,9 +282,12 @@ router.get('/profile/:id', isLoggedIn, function (req, res) {
 })
 
 
-
+//SHIFTED FROM PUBLIC CONTROLLER
 router.get('/events/event/:id', isLoggedIn, function (req, res) {
-  eventVar.findById(req.params.id, function (err, event) {
+  eventVar
+  .findById(req.params.id)
+  .populate('attendees')
+  .exec(function (err, event) {
     if (err) {
       console.log(err)
       return
@@ -291,6 +297,7 @@ router.get('/events/event/:id', isLoggedIn, function (req, res) {
     }
   })
 })
+
 
 
 // ############ /auth/profile/:id ############### //

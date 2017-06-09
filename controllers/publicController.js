@@ -19,19 +19,20 @@ router.get('/events', function (req, res) {
   })
 })
 
-//SHIFTED THIS TO USER CONTROLLER 
+//SHIFTED THIS TO USER CONTROLLER
 // // full route: /public/events/events/:id
-// router.get('/events/event/:id', function (req, res) {
-//   eventVar.findById(req.params.id, function (err, event) {
-//     if (err) {
-//       console.log(err)
-//       return
-//     } else {
-//       console.log(event);
-//       res.render('publicEventList', {event: event, req: req.user})
-//     }
-//   })
-// })
+router.get('/events/event/:id', function (req, res) {
+  eventVar.findById(req.params.id, function (err, event) {
+    if (err) {
+      console.log(err)
+      return
+    } else {
+      console.log(event);
+      console.log(req.user);
+      res.render('publicEventList', {event: event, req: req.user})
+    }
+  })
+})
 
 // if viewer wants to join event, check if user is signed in.
 // if viewer is signed in, allow to join
@@ -89,6 +90,9 @@ router.put('/events/event/:id/joinevent', function (req, res) {
           res.redirect('/public/events')
         } else if(event.attendees.indexOf(req.user._id) > 0){
           req.flash('error', 'You have already joined this event')
+          res.redirect('/public/events')
+        } else if (event.attendees.indexOf(req.user._id) === 0){
+          req.flash('error', 'You are the organizer of this event')
           res.redirect('/public/events')
 
         }
