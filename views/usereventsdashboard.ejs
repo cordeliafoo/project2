@@ -25,7 +25,7 @@
         <% user.eventsOrganized.forEach(function (item) {%>
           <tr>
           <td><%= item.startDate%></td>
-          <td><a href= "/public/events/event/<%= item.id%>"><%= item.eventName %></a></td>
+          <td><a href= "/auth/events/event/<%= item.id%>"><%= item.eventName %></a></td>
           <td><%= item.location%></td>
           <td><%= item.numberOfSpots%></td>
           <td><%= item.status%></td>

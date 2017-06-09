@@ -19,18 +19,19 @@ router.get('/events', function (req, res) {
   })
 })
 
-// full route: /public/events/events/:id
-router.get('/events/event/:id', function (req, res) {
-  eventVar.findById(req.params.id, function (err, event) {
-    if (err) {
-      console.log(err)
-      return
-    } else {
-      console.log(event);
-      res.render('publicEventList', {event: event, req: req.user})
-    }
-  })
-})
+//SHIFTED THIS TO USER CONTROLLER 
+// // full route: /public/events/events/:id
+// router.get('/events/event/:id', function (req, res) {
+//   eventVar.findById(req.params.id, function (err, event) {
+//     if (err) {
+//       console.log(err)
+//       return
+//     } else {
+//       console.log(event);
+//       res.render('publicEventList', {event: event, req: req.user})
+//     }
+//   })
+// })
 
 // if viewer wants to join event, check if user is signed in.
 // if viewer is signed in, allow to join

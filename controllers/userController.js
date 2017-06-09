@@ -9,6 +9,8 @@ var multer = require('multer')
 var cloudinary = require('cloudinary')
 var upload = multer({dest: './uploads/'})
 var isLoggedIn = require('../middleware/isLoggedIn')
+var eventVar = require('../models/eventModel')
+
 
 // ############ /auth/signup ############### //
 router.get('/signup', function (req, res) {
@@ -275,6 +277,21 @@ router.get('/profile/:id', isLoggedIn, function (req, res) {
     }
   })
 })
+
+
+
+router.get('/events/event/:id', isLoggedIn, function (req, res) {
+  eventVar.findById(req.params.id, function (err, event) {
+    if (err) {
+      console.log(err)
+      return
+    } else {
+      console.log(event);
+      res.render('publicEventList', {event: event, req: req.user})
+    }
+  })
+})
+
 
 // ############ /auth/profile/:id ############### //
 router.delete('/profile/:id', function(req, res){
